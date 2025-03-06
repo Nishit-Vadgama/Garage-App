@@ -11,14 +11,14 @@ import '../../../../../Config/Config_Widgets/Text_Widget.dart';
 import '../../../../Database/Database_Services.dart';
 import '../../../../Model/Vehicle_Model.dart';
 import '../../../../Widgets/Car_Tile.dart';
-import 'Find_Car_Controller.dart';
+import 'Find_Vehicle_Controller.dart';
 
-class FindCarScreen extends StatelessWidget {
-  const FindCarScreen({super.key});
+class FindVehicleScreen extends StatelessWidget {
+  const FindVehicleScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(FindCarController());
+    final controller = Get.put(FindVehicleController());
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       appBar: AppBar(

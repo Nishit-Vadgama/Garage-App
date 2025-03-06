@@ -2,30 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nv/Config/Config_Widgets/App_Button.dart';
+import 'package:nv/App/Model/Vehicle_Model.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../../Config/App_Configs/App_Colors.dart';
 import '../../../../../Config/App_Configs/App_Dialogs.dart';
 import '../../../../../Config/App_Configs/App_Sizes.dart';
 import '../../../../../Config/App_Configs/App_Strings.dart';
+import '../../../../../Config/Config_Widgets/App_Button.dart';
 import '../../../../../Config/Config_Widgets/Image_Widget.dart';
 import '../../../../../Config/Config_Widgets/Shadowed_Container.dart';
 import '../../../../../Config/Config_Widgets/Snackbar.dart';
 import '../../../../../Config/Config_Widgets/Text_Field.dart';
 import '../../../../../Config/Config_Widgets/Text_Widget.dart';
-import 'Add_Car_Controller.dart';
+import 'Add_Vehicle_Controller.dart';
 
-class AddCarScreen extends StatelessWidget {
-  const AddCarScreen({super.key});
+class AddVehicleScreen extends StatelessWidget {
+  const AddVehicleScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AddCarController());
+    Vehicle? vehicle =
+        Get.arguments != null ? Vehicle.fromJson(Get.arguments) : null;
+    final controller = Get.put(AddVehicleController(vehicle: vehicle));
     return Scaffold(
       appBar: AppBar(
         title: TText(
-          text: "Add Car",
+          text: vehicle != null ? "Update Car" : "Add Car",
           fontSize: AppSizes.headingSize,
           fontColor: AppColors.whiteColor,
         ),
@@ -67,24 +70,6 @@ class AddCarScreen extends StatelessWidget {
                   ),
                 ),
 
-                // Owner Address
-                ShadowTextField(
-                  controller: controller.vehicleOwnerAddress,
-                  label: "Address",
-                  minLines: 2,
-                  maxLines: 2,
-                  prefixIcon: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Iconsax.home,
-                        size: AppSizes.bigIconSize,
-                        color: AppColors.primaryColor,
-                      ),
-                    ],
-                  ),
-                ),
-
                 // Number Plate
                 ShadowTextField(
                   controller: controller.vehicleNumberPlate,
@@ -94,10 +79,7 @@ class AddCarScreen extends StatelessWidget {
                     size: AppSizes.bigIconSize,
                     color: AppColors.primaryColor,
                   ),
-                  inputFormatters: [
-                    NumberPlateInputFormatter(),
-                    // FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9]')),
-                  ],
+                  inputFormatters: [NumberPlateInputFormatter()],
                 ),
 
                 // Vehicle Model
@@ -115,8 +97,8 @@ class AddCarScreen extends StatelessWidget {
 
                 Obx(
                   () => AppButton(
-                    onPress: controller.saveCar,
-                    text: "Save",
+                    onPress: controller.saveVehicle,
+                    text: vehicle != null ? "Update" : "Add",
                     isLoading: controller.isLoading.value,
                   ),
                 ),
@@ -130,7 +112,7 @@ class AddCarScreen extends StatelessWidget {
 }
 
 class MediaShow extends StatelessWidget {
-  final AddCarController controller;
+  final AddVehicleController controller;
   final String title;
 
   const MediaShow({

@@ -17,13 +17,44 @@ class DatabaseServices {
     try {
       var vehicleRef = CollectionService.VehicleCollection.doc();
       vehicle.vehicleId = vehicleRef.id;
-      vehicle.addedOn = Timestamp.now();
       await vehicleRef.set(vehicle.toJson());
       logger.i("ADDED VEHICLE --> ${vehicle.toJson()}");
       return true;
     } catch (e) {
       logger.e("Error while adding vehicle --> $e");
       return false;
+    }
+  }
+
+  /////////////////// UPDATE VEHICLE //////////////////
+  static Future<bool> updateVehicle({required Vehicle vehicle}) async {
+    try {
+      await CollectionService.VehicleCollection.doc(vehicle.vehicleId)
+          .update(vehicle.toJson());
+      logger.i("UPDATED VEHICLE --> ${vehicle.toJson()}");
+      return true;
+    } catch (e) {
+      logger.e("Error while updating vehicle --> $e");
+      return false;
+    }
+  }
+
+  static Future<Vehicle> getVehicleByVehicleId(
+      {required String vehicleId}) async {
+    try {
+      var vehicleRef = CollectionService.VehicleCollection.doc(vehicleId);
+      var vehicleDoc = await vehicleRef.get();
+      if (vehicleDoc.exists) {
+        var vehicle = Vehicle.fromJson(vehicleDoc.data()!);
+        logger.i("Retrieved VEHICLE --> $vehicle");
+        return vehicle;
+      } else {
+        logger.e("Vehicle not found with id --> $vehicleId");
+        return Vehicle();
+      }
+    } catch (e) {
+      logger.e("Error while getting vehicle by id --> $e");
+      return Vehicle();
     }
   }
 

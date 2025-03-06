@@ -7,7 +7,6 @@ class Vehicle {
   String? model;
   String? ownerName;
   String? ownerPhoneNumber;
-  String? ownerAddress;
   bool? inWorkShop;
   Timestamp? addedOn;
 
@@ -18,7 +17,6 @@ class Vehicle {
     this.model,
     this.ownerName,
     this.ownerPhoneNumber,
-    this.ownerAddress,
     this.inWorkShop,
     this.addedOn,
   });
@@ -32,7 +30,6 @@ class Vehicle {
     inWorkShop = json['inWorkShop'];
     ownerName = json['ownerName'];
     ownerPhoneNumber = json['ownerPhoneNumber'];
-    ownerAddress = json['ownerAddress'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,7 +42,7 @@ class Vehicle {
     data['inWorkShop'] = inWorkShop;
     data['ownerName'] = ownerName;
     data['ownerPhoneNumber'] = ownerPhoneNumber;
-    data['ownerAddress'] = ownerAddress;
+
     return data;
   }
 }

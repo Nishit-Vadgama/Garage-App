@@ -15,17 +15,17 @@ class HomeController extends GetxController {
     {
       "title": "Working Car",
       "image": AppImages.Working_Car,
-      "screen": AppRoutes.WORKING_CAR,
+      "screen": AppRoutes.WORKING_VEHICLE,
     },
     {
       "title": "Find Car",
       "image": AppImages.Find_Car,
-      "screen": AppRoutes.FIND_CAR,
+      "screen": AppRoutes.FIND_VEHICLE,
     },
     {
       "title": "Add Car",
       "image": AppImages.Add_Car,
-      "screen": AppRoutes.ADD_CAR,
+      "screen": AppRoutes.ADD_VEHICLE,
     },
     {
       "title": "Revenue",

@@ -3,19 +3,21 @@ import 'package:get/get.dart';
 
 import '../Modules/Screens/Auth/Login/Login_Screen.dart';
 import '../Modules/Screens/Auth/Splash/Splash_Screen.dart';
-import '../Modules/Screens/Main_Screens/Add_Car/Add_Car_Screen.dart';
-import '../Modules/Screens/Main_Screens/Find_Car/Find_Car_Screen.dart';
+import '../Modules/Screens/Main_Screens/Add_Vehicle/Add_Vehicle_Screen.dart';
+import '../Modules/Screens/Main_Screens/Find_Vehicle/Find_Vehicle_Screen.dart';
 import '../Modules/Screens/Main_Screens/Home/Home_Screen.dart';
-import '../Modules/Screens/Main_Screens/Working_Car/Working_Car_Screen.dart';
+import '../Modules/Screens/Main_Screens/Vehicle_Detail/Vehicle_Detail_Screen.dart';
+import '../Modules/Screens/Main_Screens/Working_Vehicle/Working_Vehicle_Screen.dart';
 
 class AppRoutes {
   /////////// Route Names ///////////
   static const String INITIAL = "/splash";
   static const String LOGIN = "/login";
   static const String HOME = "/home";
-  static const String ADD_CAR = "/add_car";
-  static const String WORKING_CAR = "/working_car";
-  static const String FIND_CAR = "/find_car";
+  static const String ADD_VEHICLE = "/add_vehicle";
+  static const String WORKING_VEHICLE = "/working_vehicle";
+  static const String FIND_VEHICLE = "/find_vehicle";
+  static const String VEHICLE_DETAIL = "/vehicle_detail";
 
   /////////// App Routes ///////////
   static final pages = [
@@ -41,22 +43,29 @@ class AppRoutes {
       transitionDuration: const Duration(milliseconds: 800),
     ),
     GetPage(
-      name: WORKING_CAR,
-      page: () => WorkingCarScreen(),
+      name: WORKING_VEHICLE,
+      page: () => WorkingVehicleScreen(),
       transition: Transition.rightToLeft,
       curve: Curves.easeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
-      name: ADD_CAR,
-      page: () => AddCarScreen(),
+      name: ADD_VEHICLE,
+      page: () => AddVehicleScreen(),
       transition: Transition.rightToLeft,
       curve: Curves.easeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
-      name: FIND_CAR,
-      page: () => FindCarScreen(),
+      name: FIND_VEHICLE,
+      page: () => FindVehicleScreen(),
+      transition: Transition.rightToLeft,
+      curve: Curves.easeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: VEHICLE_DETAIL,
+      page: () => VehicleDetailScreen(),
       transition: Transition.rightToLeft,
       curve: Curves.easeIn,
       transitionDuration: const Duration(milliseconds: 400),

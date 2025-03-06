@@ -7,7 +7,7 @@ import 'Shadowed_Container.dart';
 import 'Text_Widget.dart';
 
 class AppListTile extends StatelessWidget {
-  final Widget? prefixWidget;
+  final Widget? prefixWidget, suffixWidget;
   final VoidCallback onTap;
   final IconData? prefixIcon;
   final String title;
@@ -41,6 +41,7 @@ class AppListTile extends StatelessWidget {
     this.prefixPadding,
     this.titleColor,
     this.subtitleColor,
+    this.suffixWidget,
   });
 
   @override
@@ -50,13 +51,13 @@ class AppListTile extends StatelessWidget {
       shadowColor: shadowColor,
       shadowBlur: 3,
       backgroundColor: backgroundColor,
-      padding: EdgeInsets.all(listTilePadding ?? 12.sp),
+      padding: EdgeInsets.all(listTilePadding ?? AppSizes.s12),
       onTap: onTap,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            padding: EdgeInsets.all(prefixPadding ?? 10.sp),
+            padding: EdgeInsets.all(prefixPadding ?? AppSizes.s12),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: AppColors.primaryColor,
@@ -91,6 +92,7 @@ class AppListTile extends StatelessWidget {
               ],
             ),
           ),
+          if (suffixWidget != null) suffixWidget!,
           if (isArrowRight != null)
             Icon(
               Icons.arrow_forward_ios,

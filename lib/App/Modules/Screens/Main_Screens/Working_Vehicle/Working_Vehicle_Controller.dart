@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
 
-class WorkingCarController extends GetxController {
+class WorkingVehicleController extends GetxController {
   RxString searchQuery = "".obs;
 }

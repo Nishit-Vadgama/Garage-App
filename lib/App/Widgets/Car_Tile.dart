@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nv/App/Routes/App_Routes.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../Config/App_Configs/App_Colors.dart';
@@ -10,6 +12,8 @@ import '../Model/Vehicle_Model.dart';
 
 Widget CarTile({required Vehicle vehicle}) {
   return ShadowedContainer(
+    onTap: () =>
+        Get.toNamed(AppRoutes.VEHICLE_DETAIL, arguments: vehicle.vehicleId),
     backgroundColor: AppColors.primaryPastelColor,
     shadowBlur: 0,
     padding: AppSizes.defaultPadding,
