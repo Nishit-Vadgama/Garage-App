@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nv/App/Modules/Screens/Main_Screens/Add_Service/Add_Service_Screen.dart';
 
 import '../Modules/Screens/Auth/Login/Login_Screen.dart';
 import '../Modules/Screens/Auth/Splash/Splash_Screen.dart';
@@ -18,6 +19,7 @@ class AppRoutes {
   static const String WORKING_VEHICLE = "/working_vehicle";
   static const String FIND_VEHICLE = "/find_vehicle";
   static const String VEHICLE_DETAIL = "/vehicle_detail";
+  static const String ADD_SERVICE = "/add_service";
 
   /////////// App Routes ///////////
   static final pages = [
@@ -66,6 +68,13 @@ class AppRoutes {
     GetPage(
       name: VEHICLE_DETAIL,
       page: () => VehicleDetailScreen(),
+      transition: Transition.rightToLeft,
+      curve: Curves.easeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: ADD_SERVICE,
+      page: () => AddServiceScreen(),
       transition: Transition.rightToLeft,
       curve: Curves.easeIn,
       transitionDuration: const Duration(milliseconds: 400),

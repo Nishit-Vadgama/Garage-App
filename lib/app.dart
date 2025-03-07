@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:nv/App/Routes/App_Routes.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import 'App/Routes/App_Routes.dart';
 import 'Config/App_Configs/App_Strings.dart';
 import 'Config/App_Configs/App_Theme.dart';
 import 'Config/App_Configs/Network_Manager.dart';

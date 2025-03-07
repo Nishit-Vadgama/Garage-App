@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:logger/logger.dart';
-import 'package:nv/App/Model/Vehicle_Model.dart';
+import 'package:nv/App/Model/Service_Model.dart';
 
+import '../Model/Vehicle_Model.dart';
 import 'Collection_Service.dart';
 
 class DatabaseServices {
@@ -39,6 +40,7 @@ class DatabaseServices {
     }
   }
 
+  /////////////////// GET VEHICLE BY ID //////////////////
   static Future<Vehicle> getVehicleByVehicleId(
       {required String vehicleId}) async {
     try {
@@ -69,7 +71,7 @@ class DatabaseServices {
         },
       );
 
-  /////////////////// GET CURRENT IN  VEHICLE //////////////////
+  /////////////////// GET IN WORKING IN VEHICLE //////////////////
   static Stream<List<Vehicle>> getWorkingVehicles() =>
       CollectionService.VehicleCollection.where('inWorkShop', isEqualTo: true)
           .snapshots()
@@ -80,4 +82,28 @@ class DatabaseServices {
           logger.e("Error while getting workshop vehicles --> $error");
         },
       );
+
+  /////////////////// GET SERVICES OF VEHICLE //////////////////
+  static Stream<List<Service>> getVehicleServices({required String vehicleId}) {
+    return CollectionService.VehicleCollection.doc(vehicleId)
+        .collection("Services")
+        .snapshots()
+        .map((service) =>
+            service.docs.map((doc) => Service.fromJson(doc.data())).toList());
+  }
+
+  static Future<bool> addVehicleService(
+      {required String vehicleId, required Service service}) async {
+    try {
+      final serviceRef = CollectionService.VehicleCollection.doc(vehicleId)
+          .collection("Services")
+          .doc();
+      service.serviceId = serviceRef.id;
+      await serviceRef.set(service.toJson());
+      return true;
+    } catch (error) {
+      logger.e("Error while addVehicleService --> $error");
+      return false;
+    }
+  }
 }

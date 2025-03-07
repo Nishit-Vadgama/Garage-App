@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nv/App/Routes/App_Routes.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../Config/App_Configs/App_Colors.dart';
@@ -9,6 +8,7 @@ import '../../Config/Config_Widgets/Image_Widget.dart';
 import '../../Config/Config_Widgets/Shadowed_Container.dart';
 import '../../Config/Config_Widgets/Text_Widget.dart';
 import '../Model/Vehicle_Model.dart';
+import '../Routes/App_Routes.dart';
 
 Widget CarTile({required Vehicle vehicle}) {
   return ShadowedContainer(
@@ -36,40 +36,62 @@ Widget CarTile({required Vehicle vehicle}) {
               Row(
                 spacing: AppSizes.smallWidth,
                 children: [
-                  Icon(
-                    Icons.person,
-                    color: AppColors.blackColor,
+                  CircleAvatar(
+                    backgroundColor: AppColors.primaryColor,
+                    radius: 15.sp,
+                    child: Icon(
+                      Icons.person,
+                      size: AppSizes.iconSize,
+                      color: AppColors.primaryPastelColor,
+                    ),
                   ),
-                  TText(
-                    text: vehicle.ownerName.toString(),
-                    fontWeight: AppSizes.wBold,
-                    fontColor: AppColors.primaryColor,
-                  ),
-                ],
-              ),
-              Row(
-                spacing: AppSizes.smallWidth,
-                children: [
-                  Icon(
-                    Icons.drive_eta,
-                    color: AppColors.blackColor,
-                  ),
-                  TText(
-                    text: vehicle.numberPlate.toString(),
-                    fontColor: AppColors.primaryColor,
+                  Expanded(
+                    child: TText(
+                      text: vehicle.ownerName.toString(),
+                      maxLine: 2,
+                      fontWeight: AppSizes.wBold,
+                      fontColor: AppColors.primaryColor,
+                    ),
                   ),
                 ],
               ),
               Row(
                 spacing: AppSizes.smallWidth,
                 children: [
-                  Icon(
-                    Icons.phone,
-                    color: AppColors.blackColor,
+                  CircleAvatar(
+                    backgroundColor: AppColors.primaryColor,
+                    radius: 15.sp,
+                    child: Icon(
+                      Icons.drive_eta,
+                      color: AppColors.primaryPastelColor,
+                      size: AppSizes.iconSize,
+                    ),
                   ),
-                  TText(
-                    text: vehicle.ownerPhoneNumber.toString(),
-                    fontColor: AppColors.primaryColor,
+                  Expanded(
+                    child: TText(
+                      text: vehicle.numberPlate.toString(),
+                      fontColor: AppColors.primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                spacing: AppSizes.smallWidth,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: AppColors.primaryColor,
+                    radius: 15.sp,
+                    child: Icon(
+                      Icons.phone,
+                      color: AppColors.primaryPastelColor,
+                      size: AppSizes.iconSize,
+                    ),
+                  ),
+                  Expanded(
+                    child: TText(
+                      text: vehicle.ownerPhoneNumber.toString(),
+                      fontColor: AppColors.primaryColor,
+                    ),
                   ),
                 ],
               ),
