@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,7 +17,6 @@ import 'App_Functions.dart';
 import 'App_Images.dart';
 import 'App_Sizes.dart';
 import 'App_Strings.dart';
-import 'App_TextStyles.dart';
 
 class AppDialogs {
   static final AppDialogs _instance = AppDialogs._internal();
@@ -35,10 +33,9 @@ class AppDialogs {
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            colorScheme:
-                const ColorScheme.light(primary: AppColors.primaryColor),
+            colorScheme: ColorScheme.light(primary: AppColors.primary),
             datePickerTheme: DatePickerThemeData(
-              backgroundColor: AppColors.whiteColor,
+              backgroundColor: AppColors.white,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12)),
               dayShape: WidgetStatePropertyAll(
@@ -46,10 +43,8 @@ class AppDialogs {
               ),
               weekdayStyle: const TextStyle(fontWeight: FontWeight.bold),
               confirmButtonStyle: ButtonStyle(
-                backgroundColor:
-                    const WidgetStatePropertyAll(AppColors.primaryColor),
-                foregroundColor:
-                    const WidgetStatePropertyAll(AppColors.whiteColor),
+                backgroundColor: WidgetStatePropertyAll(AppColors.primary),
+                foregroundColor: WidgetStatePropertyAll(AppColors.white),
                 shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
@@ -87,19 +82,16 @@ class AppDialogs {
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            colorScheme:
-                const ColorScheme.light(primary: AppColors.primaryColor),
+            colorScheme: ColorScheme.light(primary: AppColors.primary),
             timePickerTheme: TimePickerThemeData(
-              backgroundColor: AppColors.whiteColor,
-              dayPeriodColor: AppColors.primaryColor.withOpacity(.5),
-              dialBackgroundColor: AppColors.greyColor,
+              backgroundColor: AppColors.white,
+              dayPeriodColor: AppColors.primary.withOpacity(.5),
+              dialBackgroundColor: AppColors.grey,
               shape: RoundedRectangleBorder(
                   borderRadius: AppSizes.defaultBorderRadius),
               confirmButtonStyle: ButtonStyle(
-                backgroundColor:
-                    const WidgetStatePropertyAll(AppColors.primaryColor),
-                foregroundColor:
-                    const WidgetStatePropertyAll(AppColors.whiteColor),
+                backgroundColor: WidgetStatePropertyAll(AppColors.primary),
+                foregroundColor: WidgetStatePropertyAll(AppColors.white),
                 shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                       borderRadius: AppSizes.defaultBorderRadius),
@@ -137,7 +129,7 @@ class AppDialogs {
     final picker = ImagePicker();
     return await Get.bottomSheet(
       enableDrag: true,
-      backgroundColor: AppColors.whiteColor,
+      backgroundColor: AppColors.white,
       shape: RoundedRectangleBorder(
           borderRadius:
               BorderRadius.vertical(top: Radius.circular(AppSizes.s16))),
@@ -150,7 +142,7 @@ class AppDialogs {
           children: [
             TText(
               text: AppStrings.ChooseAnyOption,
-              fontColor: AppColors.primaryColor,
+              fontColor: AppColors.primary,
               fontWeight: AppSizes.wBold,
             ),
             SizedBox(height: AppSizes.mediumHeight),
@@ -166,9 +158,9 @@ class AppDialogs {
                           EdgeInsets.symmetric(horizontal: 2.w, vertical: 5.h),
                       decoration: BoxDecoration(
                         borderRadius: AppSizes.defaultBorderRadius,
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
-                            color: AppColors.shadowColor,
+                            color: AppColors.shadow,
                             blurRadius: 3,
                             blurStyle: BlurStyle.outer,
                           ),
@@ -180,7 +172,7 @@ class AppDialogs {
                           Icon(
                             Icons.camera_alt_outlined,
                             size: AppSizes.bigIconSize + AppSizes.s10,
-                            color: AppColors.primaryColor,
+                            color: AppColors.primary,
                           ),
                           SizedBox(height: AppSizes.smallHeight),
                           TText(text: AppStrings.Camera),
@@ -207,9 +199,9 @@ class AppDialogs {
                           EdgeInsets.symmetric(horizontal: 2.w, vertical: 5.h),
                       decoration: BoxDecoration(
                         borderRadius: AppSizes.defaultBorderRadius,
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
-                            color: AppColors.shadowColor,
+                            color: AppColors.shadow,
                             blurRadius: 3,
                             blurStyle: BlurStyle.outer,
                           ),
@@ -221,7 +213,7 @@ class AppDialogs {
                           Icon(
                             Icons.image_outlined,
                             size: AppSizes.bigIconSize + AppSizes.s10,
-                            color: AppColors.primaryColor,
+                            color: AppColors.primary,
                           ),
                           SizedBox(height: AppSizes.smallHeight),
                           TText(text: AppStrings.Gallery),
@@ -505,7 +497,7 @@ class AppDialogs {
             children: [
               AppButton(
                 width: 35.w,
-                backgroundColor: AppColors.primaryColor,
+                backgroundColor: AppColors.primary,
                 onPress: () {
                   Get.back();
                   App_Snackbar(type: true, msg: "Delete Successfully");
@@ -515,9 +507,9 @@ class AppDialogs {
               ),
               AppButton(
                 width: 35.w,
-                borderColor: AppColors.primaryColor,
-                backgroundColor: AppColors.whiteColor,
-                textColor: AppColors.primaryColor,
+                borderColor: AppColors.primary,
+                backgroundColor: AppColors.white,
+                textColor: AppColors.primary,
                 onPress: () => Get.back(),
                 text: "Cancel",
               ),
@@ -533,21 +525,21 @@ class AppDialogs {
       builder: (context, child) {
         return Theme(
           data: ThemeData.dark().copyWith(
-            primaryColor: AppColors.primaryColor, // Highlight color
-            colorScheme: const ColorScheme.dark(
-              primary: AppColors.primaryColor,
+            primaryColor: AppColors.primary, // Highlight color
+            colorScheme: ColorScheme.dark(
+              primary: AppColors.primary,
             ),
             datePickerTheme: DatePickerThemeData(
-              backgroundColor: AppColors.greyColor,
-              dividerColor: AppColors.whiteColor.withOpacity(.4),
-              weekdayStyle: const TextStyle(color: AppColors.primaryColor),
-              todayBorder: const BorderSide(color: AppColors.primaryColor),
+              backgroundColor: AppColors.grey,
+              dividerColor: AppColors.white.withOpacity(.4),
+              weekdayStyle: TextStyle(color: AppColors.primary),
+              todayBorder: BorderSide(color: AppColors.primary),
               dayShape: WidgetStatePropertyAll(
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               ),
-              confirmButtonStyle: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(AppColors.primaryColor),
-                foregroundColor: WidgetStatePropertyAll(AppColors.whiteColor),
+              confirmButtonStyle: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(AppColors.primary),
+                foregroundColor: WidgetStatePropertyAll(AppColors.white),
                 textStyle: WidgetStatePropertyAll(
                   TextStyle(fontWeight: FontWeight.bold),
                 ),
@@ -625,7 +617,7 @@ class AppDialogs {
     return Get.dialog(
       AlertDialog(
         insetPadding: EdgeInsets.zero,
-        backgroundColor: AppColors.whiteColor,
+        backgroundColor: AppColors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         contentPadding: EdgeInsets.all(15.sp),
         content: SizedBox(
@@ -647,7 +639,7 @@ class AppDialogs {
                 prefixIcon: Icon(
                   Icons.search,
                   size: AppSizes.iconSize + 5,
-                  color: AppColors.primaryColor,
+                  color: AppColors.primary,
                 ),
               ),
               Expanded(
@@ -705,7 +697,7 @@ class AppDialogs {
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(14))),
-        backgroundColor: AppColors.blackGreyColor,
+        backgroundColor: AppColors.grey,
         Container(
           height: bottomSheetHeight ?? 70.h,
           padding: EdgeInsets.only(top: bottomSheetPadding ?? 12.sp),
@@ -727,7 +719,7 @@ class AppDialogs {
                   Icon(
                     icon,
                     size: AppSizes.iconSize + 5,
-                    color: AppColors.primaryColor,
+                    color: AppColors.primary,
                   ),
                   SizedBox(width: AppSizes.mediumWidth + 5),
                   TText(
@@ -743,40 +735,4 @@ class AppDialogs {
           ),
         ),
       );
-
-  static Future<Country?> countryPickerBottomSheet() async {
-    Completer<Country?> completer = Completer<Country?>();
-
-    showCountryPicker(
-      context: Get.context!,
-      moveAlongWithKeyboard: true,
-      showPhoneCode: true,
-      countryListTheme: CountryListThemeData(
-        flagSize: 25,
-        backgroundColor: AppColors.whiteColor,
-        textStyle: AppTextStyles.normalTextStyle,
-        bottomSheetHeight: 52.h,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
-        ),
-        inputDecoration: InputDecoration(
-          hintText: 'Search Country',
-          prefixIcon: const Icon(Icons.search),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: const Color(0xFF8C98A8).withOpacity(0.2),
-            ),
-          ),
-        ),
-      ),
-      onSelect: (Country pickedCountry) {
-        print(
-            'Selected country: \n${pickedCountry.flagEmoji} \n${pickedCountry.countryCode} \n${pickedCountry.displayName} \n${pickedCountry.name} \n${pickedCountry.displayNameNoCountryCode} \n${pickedCountry.e164Key} \n${pickedCountry.e164Sc} \n${pickedCountry.example} \n${pickedCountry.fullExampleWithPlusSign} \n${pickedCountry.geographic} \n${pickedCountry.hashCode} \n${pickedCountry.iswWorldWide} \n${pickedCountry.level} \n${pickedCountry.nameLocalized} \n${pickedCountry.phoneCode} }');
-        completer.complete(pickedCountry);
-      },
-    );
-
-    return completer.future;
-  }
 }

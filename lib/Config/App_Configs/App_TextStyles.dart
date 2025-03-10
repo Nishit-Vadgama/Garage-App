@@ -6,7 +6,7 @@ import 'App_Sizes.dart';
 class AppTextStyles {
   static TextStyle headingTextStyle = TextStyle(
     fontSize: AppSizes.headingSize,
-    color: AppColors.blackColor,
+    color: AppColors.black,
     fontWeight: AppSizes.w500,
     fontFamily: "poppins",
     overflow: TextOverflow.ellipsis,
@@ -14,7 +14,7 @@ class AppTextStyles {
 
   static TextStyle normalTextStyle = TextStyle(
     fontSize: AppSizes.titleSize,
-    color: AppColors.blackColor,
+    color: AppColors.black,
     fontWeight: AppSizes.w400,
     fontFamily: "poppins",
     overflow: TextOverflow.ellipsis,
@@ -22,7 +22,7 @@ class AppTextStyles {
 
   static TextStyle boldTextStyle = TextStyle(
     fontSize: AppSizes.titleSize,
-    color: AppColors.blackColor,
+    color: AppColors.black,
     fontWeight: AppSizes.wBold,
     fontFamily: "poppins",
     overflow: TextOverflow.ellipsis,
@@ -30,14 +30,14 @@ class AppTextStyles {
 
   static TextStyle subTitleTextStyle = TextStyle(
     fontSize: AppSizes.subtitleSize,
-    color: AppColors.blackColor,
+    color: AppColors.black,
     fontFamily: "poppins",
     overflow: TextOverflow.ellipsis,
   );
 
   static TextStyle greyTextStyle = TextStyle(
     fontSize: AppSizes.titleSize,
-    color: AppColors.textGrey,
+    color: AppColors.text,
     fontWeight: AppSizes.w400,
     fontFamily: "poppins",
     overflow: TextOverflow.ellipsis,

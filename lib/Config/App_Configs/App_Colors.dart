@@ -5,14 +5,47 @@ class AppColors {
   AppColors._internal();
   factory AppColors() => _instance;
 
-  static const Color primaryColor = Color(0XFF043161);
-  static const Color primaryPastelColor = Color(0XFFE8F3FF);
-  static const Color shadowColor = Color(0XFFD2D2D2);
-  static const Color whiteColor = Colors.white;
-  static const Color blackColor = Colors.black;
-  static const Color blackGreyColor = Color(0XFF333333);
-  static Color greyColor = Colors.grey.shade200;
-  static const Color textGrey = Color(0XFF7E7E7E);
-  static const Color redColor = Colors.red;
-  static const Color successColor = Colors.greenAccent;
+  static Color primary = Color(0XFF043161);
+  static Color pastel = Color(0XFFE8F3FF);
+  static Color shadow = Color(0XFFD2D2D2);
+  static Color white = Colors.white;
+  static Color black = Colors.black;
+  static Color grey = Colors.grey.shade200;
+  static Color text = Color(0XFF7E7E7E);
+  static Color red = Colors.red;
+  static Color green = Colors.greenAccent;
+}
+
+Color NvColor(String color) {
+  switch (color) {
+    case "primary":
+      return AppColors.primary;
+
+    case "black":
+      return AppColors.black;
+
+    case "grey":
+      return AppColors.grey;
+
+    case "red":
+      return AppColors.red;
+
+    case "white":
+      return AppColors.white;
+
+    case "pastle":
+      return AppColors.pastel;
+
+    case "shadow":
+      return AppColors.shadow;
+
+    case "green":
+      return AppColors.green;
+
+    case "text":
+      return AppColors.text;
+
+    default:
+      return AppColors.white;
+  }
 }

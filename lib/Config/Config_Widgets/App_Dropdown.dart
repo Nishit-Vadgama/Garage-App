@@ -31,13 +31,13 @@ class AppDropDown<T> extends StatelessWidget {
       height: height,
       width: width,
       onTap: () async => await AppDialogs.showDropdownDialog<T>(
-          items: items,
-          hint: hint,
-          filterCondition: filterCondition,
-          itemBuilder: itemBuilder,
-          ),
+        items: items,
+        hint: hint,
+        filterCondition: filterCondition,
+        itemBuilder: itemBuilder,
+      ),
       borderRadius: AppSizes.s12,
-      backgroundColor: AppColors.whiteColor,
+      backgroundColor: AppColors.white,
       padding: AppSizes.defaultPadding,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,15 +46,15 @@ class AppDropDown<T> extends StatelessWidget {
             child: TText(
               text: value == null || value!.isEmpty ? hint : value!,
               fontColor: value == null || value!.isEmpty
-                  ? AppColors.textGrey
-                  : AppColors.blackColor,
+                  ? AppColors.text
+                  : AppColors.black,
               fontWeight: AppSizes.wBold,
             ),
           ),
           Icon(
             Icons.keyboard_arrow_down,
             size: AppSizes.bigIconSize,
-            color: AppColors.primaryColor,
+            color: AppColors.primary,
           )
         ],
       ),

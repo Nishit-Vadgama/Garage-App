@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -6,56 +5,51 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../../../Config/App_Configs/App_Colors.dart';
 import '../../../../../Config/App_Configs/App_Images.dart';
 import '../../../../../Config/App_Configs/App_Sizes.dart';
+import '../../../../../Config/App_Configs/App_Strings.dart';
 import '../../../../../Config/Config_Widgets/Image_Widget.dart';
 import '../../../../../Config/Config_Widgets/Shadowed_Container.dart';
 import '../../../../../Config/Config_Widgets/Text_Widget.dart';
-import '../../../../AppHelper/App_Master_Data.dart';
-import '../../../../Database/Collection_Service.dart';
+import 'home_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: CollectionService.UICollection.doc("home_screen").snapshots(),
-      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (!snapshot.hasData || !snapshot.data!.exists) {
-          return Scaffold(body: Center(child: CircularProgressIndicator()));
+    final HomeController controller = Get.put(HomeController());
+
+    return RefreshIndicator(
+      backgroundColor: AppColors.pastel,
+      color: AppColors.primary,
+      onRefresh: () async => await controller.getHomeScreenUI(),
+      child: Obx(() {
+        if (controller.isLoading.value) {
+          return Scaffold(
+            body: Center(
+                child: CircularProgressIndicator(color: AppColors.primary)),
+          );
         }
+        var appBarData = controller.data["appBar"] ?? {};
 
-        var data = snapshot.data!.data() as Map<String, dynamic>;
-        var appBarData = data["appBar"] ?? {};
-
-        return FutureBuilder<Color>(
-          future: AppMasterData.fetchFirestoreColor(data["backgroundColor"]),
-          builder: (context, colorSnapshot) {
-            Color backgroundColor = colorSnapshot.data ?? AppColors.greyColor;
-
-            return Scaffold(
-              backgroundColor: backgroundColor,
-              appBar: AppBar(
-                // backgroundColor: appBarData["backgroundColor"] != null
-                //     ? AppMasterData.hexToColor(appBarData["backgroundColor"])
-                //     : AppColors.primaryColor,
-                title: TText(
-                  text: appBarData["title"] ?? "Dynamic Screen",
-                  // fontColor: appBarData["textColor"] != null
-                  //     ? AppMasterData.hexToColor(appBarData["textColor"])
-                  //     : AppColors.whiteColor,
-                  fontSize: AppSizes.headingSize,
-                ),
-              ),
-              body: ListView(
-                padding: AppSizes.screenPadding,
-                children: (data['widgets'] as List)
-                    .map((widgetData) => buildWidget(widgetData))
-                    .toList(),
-              ),
-            );
-          },
+        return Scaffold(
+          backgroundColor: NvColor(controller.data["backgroundColor"]),
+          appBar: AppBar(
+            backgroundColor:
+                NvColor(appBarData["backgroundColor"] ?? "primary"),
+            title: TText(
+              text: appBarData["title"] ?? AppStrings.appName,
+              fontSize: AppSizes.headingSize,
+              fontColor: NvColor(appBarData["textColor"] ?? "white"),
+            ),
+          ),
+          body: ListView(
+            padding: AppSizes.screenPadding,
+            children: (controller.data['widgets'] as List)
+                .map((widgetData) => buildWidget(widgetData))
+                .toList(),
+          ),
         );
-      },
+      }),
     );
   }
 
@@ -80,10 +74,7 @@ class HomeScreen extends StatelessWidget {
         return ShadowedContainer(
           onTap: () => Get.toNamed(widgetData["screen"]),
           padding: AppSizes.defaultPadding,
-          // backgroundColor: widgetData["backgroundColor"] != null
-          //     ? AppMasterData.hexToColor(widgetData["backgroundColor"])
-          //     : AppColors.primaryPastelColor,
-          backgroundColor: AppColors.primaryPastelColor,
+          backgroundColor: NvColor(widgetData["backgroundColor"] ?? "pastle"),
           shadowBlur: 0,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -91,10 +82,7 @@ class HomeScreen extends StatelessWidget {
               TText(
                 text: widgetData["title"] ?? "",
                 fontWeight: AppSizes.wBold,
-                fontColor: AppColors.primaryColor,
-                // fontColor: widgetData["textColor"] != null
-                //     ? AppMasterData.hexToColor(widgetData["textColor"])
-                //     : AppColors.primaryColor,
+                fontColor: NvColor(widgetData["textColor"] ?? "primary"),
               ),
               SizedBox(height: AppSizes.smallHeight),
               ImageWidget(
@@ -110,34 +98,6 @@ class HomeScreen extends StatelessWidget {
     }
   }
 }
-
-// class AppMasterData {
-//   static final Map<String, Color> _colorCache = {};
-//
-//   /// Converts hex color string to Color object
-//   static Color hexToColor(String hex) {
-//     if (hex.isEmpty) return AppColors.whiteColor;
-//     hex = hex.replaceAll("#", "");
-//     if (hex.length == 6) {
-//       hex = "FF$hex";
-//     }
-//     return Color(int.parse(hex, radix: 16));
-//   }
-//
-//   /// Fetches color from Firestore and caches it
-//   static Future<Color> fetchFirestoreColor(String docPath) async {
-//     if (_colorCache.containsKey(docPath)) {
-//       return _colorCache[docPath]!;
-//     }
-//
-//     var docSnapshot = await FirebaseFirestore.instance.doc(docPath).get();
-//     String colorCode = docSnapshot.data()?["code"] ?? "#FFFFFF";
-//     Color color = hexToColor(colorCode);
-//
-//     _colorCache[docPath] = color; // Cache the color
-//     return color;
-//   }
-// }
 
 /*class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

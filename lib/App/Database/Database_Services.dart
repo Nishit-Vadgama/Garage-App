@@ -84,12 +84,25 @@ class DatabaseServices {
       );
 
   /////////////////// GET SERVICES OF VEHICLE //////////////////
-  static Stream<List<Service>> getVehicleServices({required String vehicleId}) {
-    return CollectionService.VehicleCollection.doc(vehicleId)
-        .collection("Services")
-        .snapshots()
-        .map((service) =>
-            service.docs.map((doc) => Service.fromJson(doc.data())).toList());
+  static Future<List<Service>> getVehicleServices(
+      {required String vehicleId}) async {
+    try {
+      var services = await CollectionService.VehicleCollection.doc(vehicleId)
+          .collection("Services")
+          .get();
+
+      print("ALL SERVICES --> $services");
+
+      // Correct mapping of documents
+      List<Service> myList =
+          services.docs.map((doc) => Service.fromJson(doc.data())).toList();
+
+      print("SERVICES --> $myList");
+      return myList;
+    } catch (error) {
+      logger.e("Error while getting vehicles Services --> $error");
+      return [];
+    }
   }
 
   static Future<bool> addVehicleService(

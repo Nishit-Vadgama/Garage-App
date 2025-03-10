@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nv/App/Database/Collection_Service.dart';
+import 'package:nv/App/Model/NvColors_Model.dart';
 
 import '../../Config/App_Configs/App_Colors.dart';
 
@@ -26,7 +28,7 @@ class AppMasterData {
   }
 
   static Color hexToColor(String hex) {
-    if (hex.isEmpty) return AppColors.whiteColor;
+    if (hex.isEmpty) return AppColors.white;
     hex = hex.replaceAll("#", "");
     if (hex.length == 6) {
       hex = "FF$hex";
@@ -47,5 +49,22 @@ class AppMasterData {
     String hexCode = snapshot.data()?["code"] ?? "#FFFFFF";
     Color finalColor = hexToColor(hexCode);
     return finalColor;
+  }
+
+  static Future<void> getAndSetConfigFromFirestore() async {
+    var AllColors =
+        await CollectionService.ConfigCollection.doc("All_Colors").get();
+
+    FColors nvColors = FColors.fromJson(AllColors.data() ?? {});
+
+    AppColors.white = hexToColor(nvColors.white!);
+    AppColors.primary = hexToColor(nvColors.primary!);
+    AppColors.pastel = hexToColor(nvColors.pastle!);
+    AppColors.black = hexToColor(nvColors.black!);
+    AppColors.text = hexToColor(nvColors.text!);
+    AppColors.green = hexToColor(nvColors.green!);
+    AppColors.grey = hexToColor(nvColors.grey!);
+    AppColors.red = hexToColor(nvColors.red!);
+    AppColors.shadow = hexToColor(nvColors.shadow!);
   }
 }

@@ -60,13 +60,13 @@ class AppListTile extends StatelessWidget {
             padding: EdgeInsets.all(prefixPadding ?? AppSizes.s12),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.primaryColor,
+              color: AppColors.primary,
             ),
             child: prefixWidget ??
                 Icon(
                   prefixIcon,
                   size: prefixIconSize ?? AppSizes.iconSize + 7,
-                  color: AppColors.whiteColor,
+                  color: AppColors.white,
                 ),
           ),
           SizedBox(width: AppSizes.mediumWidth),

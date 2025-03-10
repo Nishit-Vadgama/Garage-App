@@ -17,12 +17,22 @@ class AddServiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(AddServiceController());
     return Scaffold(
-      backgroundColor: AppColors.primaryPastelColor,
+      backgroundColor: AppColors.pastel,
       appBar: AppBar(
         title: TText(
           text: "Add Service",
-          fontColor: AppColors.whiteColor,
+          fontColor: AppColors.white,
           fontSize: AppSizes.headingSize,
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.primary,
+        tooltip: "Edit Service",
+        onPressed: () {},
+        child: Icon(
+          Iconsax.edit,
+          size: AppSizes.bigIconSize,
+          color: AppColors.white,
         ),
       ),
       body: Padding(
@@ -41,7 +51,7 @@ class AddServiceScreen extends StatelessWidget {
                   Icon(
                     Iconsax.attach_circle,
                     size: AppSizes.vBigIconSize,
-                    color: AppColors.primaryColor,
+                    color: AppColors.primary,
                   ),
                 ],
               ),
@@ -54,7 +64,7 @@ class AddServiceScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: Divider(
-                    color: AppColors.primaryColor,
+                    color: AppColors.primary,
                     thickness: 2,
                   ),
                 ),
@@ -65,7 +75,7 @@ class AddServiceScreen extends StatelessWidget {
                 Expanded(
                   child: Divider(
                     thickness: 2,
-                    color: AppColors.primaryColor,
+                    color: AppColors.primary,
                   ),
                 ),
               ],
@@ -78,7 +88,7 @@ class AddServiceScreen extends StatelessWidget {
                 itemCount: 10,
                 itemBuilder: (context, index) => ShadowedContainer(
                   padding: AppSizes.defaultPadding,
-                  backgroundColor: AppColors.whiteColor,
+                  backgroundColor: AppColors.white,
                   shadowBlur: 0,
                   child: TText(text: "text"),
                 ),

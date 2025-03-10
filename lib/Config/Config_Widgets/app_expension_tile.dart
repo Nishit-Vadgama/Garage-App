@@ -32,7 +32,7 @@ class AppExpensionTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadowColor,
+            color: AppColors.shadow,
             blurRadius: 6,
             blurStyle: BlurStyle.outer,
           )
@@ -40,7 +40,7 @@ class AppExpensionTile extends StatelessWidget {
       ),
       child: ExpansionTile(
         initiallyExpanded: true,
-        iconColor: AppColors.primaryColor,
+        iconColor: AppColors.primary,
         collapsedBackgroundColor:
             collapsedBackgroundColor ?? Colors.transparent,
         backgroundColor: backgroundColor ?? Colors.transparent,
@@ -53,7 +53,7 @@ class AppExpensionTile extends StatelessWidget {
             ? Icon(
                 icon,
                 size: AppSizes.iconSize,
-                color: AppColors.primaryColor,
+                color: AppColors.primary,
               )
             : null,
         childrenPadding: EdgeInsets.only(

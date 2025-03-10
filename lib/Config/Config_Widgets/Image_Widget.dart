@@ -84,7 +84,7 @@ class ImageWidget extends StatelessWidget {
                             } else {
                               return Center(
                                 child: LoadingAnimationWidget.discreteCircle(
-                                  color: AppColors.primaryColor,
+                                  color: AppColors.primary,
                                   size: loaderSize ?? AppSizes.iconSize + 5,
                                 ),
                               );
@@ -95,12 +95,12 @@ class ImageWidget extends StatelessWidget {
                   height: height,
                   width: width ?? height,
                   isCircle: isCircle,
-                  backgroundColor: AppColors.whiteColor,
+                  backgroundColor: AppColors.white,
                   child: Center(
                     child: FaIcon(
                       FontAwesomeIcons.user,
                       size: AppSizes.vBigIconSize + AppSizes.s16,
-                      color: AppColors.primaryColor,
+                      color: AppColors.primary,
                     ),
                   ),
                 ),
@@ -111,11 +111,11 @@ class ImageWidget extends StatelessWidget {
             right: AppSizes.s14,
             child: Container(
               padding: EdgeInsets.all(AppSizes.s8),
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: AppColors.primaryColor),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: AppColors.primary),
               child: Icon(
                 Icons.edit,
-                color: AppColors.whiteColor,
+                color: AppColors.white,
                 size: editIconsSize ?? AppSizes.iconSize,
               ),
             ),
@@ -150,7 +150,7 @@ class NetworkImage_Widget extends StatelessWidget {
       width: width ?? height,
       placeholder: (context, url) => Center(
         child: LoadingAnimationWidget.discreteCircle(
-          color: AppColors.primaryColor,
+          color: AppColors.primary,
           size: loaderSize ?? AppSizes.iconSize + 5,
         ),
       ),

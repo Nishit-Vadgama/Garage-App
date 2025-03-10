@@ -18,7 +18,7 @@ class AppTextField extends StatelessWidget {
     this.keyboardType = TextInputType.name,
     this.prefixIcon,
     this.obscure = false,
-    this.focusColor = AppColors.primaryColor,
+    this.focusColor,
     this.maxLength,
     this.radius = 10,
     this.isReadOnly = false,
@@ -41,7 +41,7 @@ class AppTextField extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final bool obscure;
-  final Color focusColor;
+  final Color? focusColor;
   final int? maxLength;
   final double radius;
   final bool isReadOnly;
@@ -65,14 +65,14 @@ class AppTextField extends StatelessWidget {
       maxLength: maxLength,
       obscureText: obscure,
       style: TextStyle(
-        color: AppColors.blackColor,
+        color: AppColors.black,
         fontWeight: FontWeight.bold,
       ),
       onFieldSubmitted: submittedFunction,
       onChanged: textChangeFunction,
       textInputAction: TextInputAction.next,
       validator: validator,
-      cursorColor: AppColors.whiteColor,
+      cursorColor: AppColors.white,
       controller: controller,
       textCapitalization: isCapitalWords == true
           ? TextCapitalization.words
@@ -82,7 +82,7 @@ class AppTextField extends StatelessWidget {
       decoration: InputDecoration(
         contentPadding: padding ?? AppSizes.defaultPadding,
         counterText: "",
-        focusColor: AppColors.primaryColor,
+        focusColor: AppColors.primary,
         prefixIcon: prefixIcon != null
             ? Padding(
                 padding: EdgeInsets.all(AppSizes.s16),
@@ -92,28 +92,29 @@ class AppTextField extends StatelessWidget {
         suffixIcon: suffixIcon,
         label: label != null ? TText(text: label!) : null,
         labelStyle: TextStyle(
-          color: labelColor ?? AppColors.textGrey,
+          color: labelColor ?? AppColors.text,
           fontWeight: AppSizes.wBold,
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius),
           borderSide: BorderSide(
-            color: AppColors.redColor,
+            color: AppColors.red,
             width: 1.5,
           ),
         ),
-        errorStyle: const TextStyle(fontSize: 0),
+        errorStyle: TextStyle(fontSize: 0),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius),
-          borderSide: BorderSide(color: focusColor, width: 1.5),
+          borderSide:
+              BorderSide(color: focusColor ?? AppColors.primary, width: 1.5),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius),
-          borderSide: BorderSide(color: AppColors.textGrey, width: 1.5),
+          borderSide: BorderSide(color: AppColors.text, width: 1.5),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius),
-          borderSide: BorderSide(color: AppColors.greyColor, width: 1.5),
+          borderSide: BorderSide(color: AppColors.grey, width: 1.5),
         ),
       ),
     );
@@ -186,17 +187,17 @@ class ShadowTextField extends StatelessWidget {
     return Obx(
       () {
         final currentShadowColor = isReadOnly
-            ? AppColors.shadowColor
+            ? AppColors.shadow
             : isFocused.value
-                ? focusColor ?? AppColors.primaryColor
-                : AppColors.shadowColor;
+                ? focusColor ?? AppColors.primary
+                : AppColors.shadow;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               decoration: BoxDecoration(
-                color: backgroundColor ?? AppColors.whiteColor,
+                color: backgroundColor ?? AppColors.white,
                 boxShadow: [
                   BoxShadow(
                     color: currentShadowColor,
@@ -220,7 +221,7 @@ class ShadowTextField extends StatelessWidget {
                 style: TextStyle(
                   fontSize: AppSizes.titleSize,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.blackColor,
+                  color: AppColors.black,
                 ),
                 onFieldSubmitted: submittedFunction,
                 onChanged: textChangeFunction,
@@ -238,7 +239,7 @@ class ShadowTextField extends StatelessWidget {
                     return null;
                   }
                 },
-                cursorColor: AppColors.primaryColor,
+                cursorColor: AppColors.primary,
                 textCapitalization: isCapitalWords == true
                     ? TextCapitalization.words
                     : TextCapitalization.none,
@@ -267,7 +268,7 @@ class ShadowTextField extends StatelessWidget {
                   hintStyle: TextStyle(
                     fontWeight: AppSizes.wBold,
                     fontSize: hintSize ?? AppSizes.titleSize,
-                    color: labelColor ?? AppColors.textGrey,
+                    color: labelColor ?? AppColors.text,
                   ),
                 ),
                 textAlignVertical: TextAlignVertical.center,
@@ -281,7 +282,7 @@ class ShadowTextField extends StatelessWidget {
                     ? TText(
                         text: errorText.value,
                         fontSize: AppSizes.smallSubtitleSize - 1,
-                        fontColor: AppColors.redColor,
+                        fontColor: AppColors.red,
                         fontWeight: AppSizes.wBold,
                       )
                     : null,
@@ -341,16 +342,15 @@ class DobTextField extends StatelessWidget {
     });
 
     return Obx(() {
-      final currentShadowColor = isFocused.value
-          ? focusColor ?? AppColors.primaryColor
-          : AppColors.shadowColor;
+      final currentShadowColor =
+          isFocused.value ? focusColor ?? AppColors.primary : AppColors.shadow;
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             decoration: BoxDecoration(
-              color: AppColors.whiteColor,
+              color: AppColors.white,
               boxShadow: [
                 BoxShadow(
                   color: currentShadowColor,
@@ -391,7 +391,7 @@ class DobTextField extends StatelessWidget {
                       icon: Icon(
                         Iconsax.calendar_2,
                         size: AppSizes.iconSize + 5,
-                        color: AppColors.primaryColor,
+                        color: AppColors.primary,
                       ),
                       style: ButtonStyle(
                           overlayColor:
@@ -412,17 +412,17 @@ class DobTextField extends StatelessWidget {
                 hintStyle: TextStyle(
                   fontWeight: AppSizes.wBold,
                   fontSize: AppSizes.titleSize,
-                  color: AppColors.textGrey,
+                  color: AppColors.text,
                 ),
               ),
               textAlignVertical: TextAlignVertical.center,
               style: TextStyle(
                 fontSize: AppSizes.titleSize,
                 fontWeight: FontWeight.bold,
-                color: AppColors.blackColor,
+                color: AppColors.black,
               ),
               keyboardType: TextInputType.number,
-              cursorColor: AppColors.primaryColor,
+              cursorColor: AppColors.primary,
               inputFormatters: inputFormatters ??
                   [
                     FilteringTextInputFormatter.digitsOnly,
@@ -437,7 +437,7 @@ class DobTextField extends StatelessWidget {
                 ? TText(
                     text: errorText.value,
                     fontSize: AppSizes.smallSubtitleSize - 1,
-                    fontColor: AppColors.redColor,
+                    fontColor: AppColors.red,
                     fontWeight: AppSizes.wBold,
                   )
                 : null,

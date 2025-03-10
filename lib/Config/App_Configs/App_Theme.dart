@@ -8,14 +8,14 @@ class AppTheme {
   static ThemeData appTheme = ThemeData(
     useMaterial3: true,
     fontFamily: 'montserrat',
-    primaryColor: AppColors.primaryColor,
-    scaffoldBackgroundColor: AppColors.greyColor,
+    primaryColor: AppColors.primary,
+    scaffoldBackgroundColor: AppColors.grey,
     appBarTheme: AppBarTheme(
       toolbarHeight: 8.h,
-      backgroundColor: AppColors.primaryColor,
-      foregroundColor: AppColors.whiteColor,
+      backgroundColor: AppColors.primary,
+      foregroundColor: AppColors.white,
       iconTheme: IconThemeData(
-        color: AppColors.whiteColor,
+        color: AppColors.white,
         size: AppSizes.iconSize + 4,
       ),
       shape: RoundedRectangleBorder(

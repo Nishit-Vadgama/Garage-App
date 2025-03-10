@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
     final controller = Get.put(Login_Controller());
 
     return Scaffold(
-      backgroundColor: AppColors.greyColor,
+      backgroundColor: AppColors.grey,
       body: Obx(() => Form(
             key: controller.loginKey,
             child: ListView(

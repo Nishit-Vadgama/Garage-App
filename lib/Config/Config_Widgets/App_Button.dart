@@ -15,8 +15,8 @@ class AppButton extends StatelessWidget {
     required this.onPress,
     this.text,
     this.weight = AppSizes.wBold,
-    this.backgroundColor = AppColors.primaryColor,
-    this.textColor = AppColors.whiteColor,
+    this.backgroundColor,
+    this.textColor,
     this.fontSize,
     this.isLoading = false,
     this.height,
@@ -24,14 +24,14 @@ class AppButton extends StatelessWidget {
     this.width,
     this.padding,
     this.radius,
-    this.borderColor = Colors.transparent,
+    this.borderColor,
   });
 
   final VoidCallback onPress;
   final String? text;
   final double? height, padding, radius, width, fontSize;
   final FontWeight weight;
-  final Color backgroundColor, textColor, borderColor;
+  final Color? backgroundColor, textColor, borderColor;
   final Widget? widget;
   final bool isLoading;
   @override
@@ -46,14 +46,15 @@ class AppButton extends StatelessWidget {
           elevation: const WidgetStatePropertyAll(0),
           padding: WidgetStatePropertyAll(
               EdgeInsets.symmetric(horizontal: padding ?? AppSizes.s12)),
-          backgroundColor: WidgetStatePropertyAll(backgroundColor),
+          backgroundColor:
+              WidgetStatePropertyAll(backgroundColor ?? AppColors.primary),
           shape: WidgetStatePropertyAll(
             RoundedRectangleBorder(
               borderRadius: radius != null
                   ? BorderRadius.circular(radius!)
                   : AppSizes.defaultBorderRadius,
               side: BorderSide(
-                color: borderColor,
+                color: borderColor ?? Colors.transparent,
                 width: 1.5,
               ),
             ),
@@ -63,14 +64,14 @@ class AppButton extends StatelessWidget {
         child: isLoading
             ? Center(
                 child: LoadingAnimationWidget.horizontalRotatingDots(
-                  color: AppColors.whiteColor,
+                  color: AppColors.white,
                   size: 25.sp,
                 ),
               )
             : widget ??
                 TText(
                   text: text!,
-                  fontColor: textColor,
+                  fontColor: textColor ?? AppColors.white,
                   fontWeight: weight,
                   fontSize: fontSize,
                   textStyle: AppTextStyles.normalTextStyle,
@@ -112,14 +113,14 @@ class RoundButton extends StatelessWidget {
             text: text,
             fontWeight: FontWeight.bold,
             fontSize: textSize,
-            fontColor: textColor ?? AppColors.textGrey,
+            fontColor: textColor ?? AppColors.text,
           ),
           if (isRightArrow) SizedBox(width: AppSizes.smallWidth),
           if (isRightArrow)
             Icon(
               FontAwesomeIcons.chevronRight,
               size: AppSizes.iconSize,
-              color: AppColors.primaryColor,
+              color: AppColors.primary,
             )
         ],
       ),

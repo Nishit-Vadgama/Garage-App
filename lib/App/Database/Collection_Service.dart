@@ -8,6 +8,8 @@ class CollectionService {
   static final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   // Collections
+
+  static final ConfigCollection = firestore.collection('Config');
   static final UICollection = firestore.collection('ui_screens');
   static final ColorsCollection = firestore.collection('Colors');
   static final UserCollection = firestore.collection('Users');

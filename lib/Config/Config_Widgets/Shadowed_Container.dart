@@ -44,10 +44,10 @@ class ShadowedContainer extends StatelessWidget {
         margin: margin,
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
-          color: backgroundColor ?? AppColors.greyColor,
+          color: backgroundColor ?? AppColors.grey,
           border: isBorder == true
               ? Border.all(
-                  color: borderColor ?? AppColors.greyColor,
+                  color: borderColor ?? AppColors.grey,
                   width: borderWidth ?? 3,
                 )
               : null,
@@ -57,7 +57,7 @@ class ShadowedContainer extends StatelessWidget {
               : BorderRadius.circular(borderRadius ?? AppSizes.s12),
           boxShadow: [
             BoxShadow(
-              color: shadowColor ?? AppColors.shadowColor,
+              color: shadowColor ?? AppColors.shadow,
               blurRadius: shadowBlur ?? 5,
             )
           ],

@@ -30,7 +30,7 @@ class AddVehicleScreen extends StatelessWidget {
         title: TText(
           text: vehicle != null ? "Update Car" : "Add Car",
           fontSize: AppSizes.headingSize,
-          fontColor: AppColors.whiteColor,
+          fontColor: AppColors.white,
         ),
       ),
       body: SingleChildScrollView(
@@ -52,7 +52,7 @@ class AddVehicleScreen extends StatelessWidget {
                   prefixIcon: Icon(
                     Iconsax.user,
                     size: AppSizes.bigIconSize,
-                    color: AppColors.primaryColor,
+                    color: AppColors.primary,
                   ),
                 ),
 
@@ -66,7 +66,7 @@ class AddVehicleScreen extends StatelessWidget {
                   prefixIcon: Icon(
                     Iconsax.call,
                     size: AppSizes.bigIconSize,
-                    color: AppColors.primaryColor,
+                    color: AppColors.primary,
                   ),
                 ),
 
@@ -77,7 +77,7 @@ class AddVehicleScreen extends StatelessWidget {
                   prefixIcon: Icon(
                     Iconsax.personalcard,
                     size: AppSizes.bigIconSize,
-                    color: AppColors.primaryColor,
+                    color: AppColors.primary,
                   ),
                   inputFormatters: [NumberPlateInputFormatter()],
                 ),
@@ -89,7 +89,7 @@ class AddVehicleScreen extends StatelessWidget {
                   prefixIcon: Icon(
                     Iconsax.car,
                     size: AppSizes.bigIconSize,
-                    color: AppColors.primaryColor,
+                    color: AppColors.primary,
                   ),
                 ),
 
@@ -137,9 +137,9 @@ class MediaShow extends StatelessWidget {
           }
         },
         height: 17.h,
-        shadowColor: AppColors.primaryColor,
+        shadowColor: AppColors.primary,
         width: double.infinity,
-        backgroundColor: AppColors.primaryPastelColor,
+        backgroundColor: AppColors.pastel,
         child: controller.vehicleImage.isNotEmpty
             ? Stack(
                 children: [
@@ -155,7 +155,7 @@ class MediaShow extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius:
                             BorderRadius.vertical(top: Radius.circular(12)),
-                        color: AppColors.blackColor,
+                        color: AppColors.black,
                       ),
                       child: Row(
                         spacing: AppSizes.mediumWidth,
@@ -163,12 +163,12 @@ class MediaShow extends StatelessWidget {
                           Icon(
                             Iconsax.refresh,
                             size: AppSizes.bigIconSize,
-                            color: AppColors.redColor,
+                            color: AppColors.red,
                           ),
                           TText(
                             text: AppStrings.Change_Image,
                             fontSize: AppSizes.smallSubtitleSize,
-                            fontColor: AppColors.whiteColor,
+                            fontColor: AppColors.white,
                             fontWeight: AppSizes.wBold,
                           ),
                         ],
@@ -184,12 +184,12 @@ class MediaShow extends StatelessWidget {
                   Icon(
                     Iconsax.gallery,
                     size: AppSizes.vBigIconSize + AppSizes.s6,
-                    color: AppColors.primaryColor,
+                    color: AppColors.primary,
                   ),
                   TText(
                     text: title,
                     fontWeight: AppSizes.wBold,
-                    fontColor: AppColors.primaryColor,
+                    fontColor: AppColors.primary,
                   ),
                 ],
               ),

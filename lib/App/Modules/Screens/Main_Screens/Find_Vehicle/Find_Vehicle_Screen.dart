@@ -20,11 +20,11 @@ class FindVehicleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(FindVehicleController());
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         title: TText(
           text: "Find Car",
-          fontColor: AppColors.whiteColor,
+          fontColor: AppColors.white,
           fontSize: AppSizes.headingSize,
         ),
       ),
@@ -39,7 +39,7 @@ class FindVehicleScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: ShadowTextField(
-                    backgroundColor: AppColors.greyColor,
+                    backgroundColor: AppColors.grey,
                     shadowBlur: 3,
                     isErrorShow: false,
                     label: "Search Car..",
@@ -62,11 +62,10 @@ class FindVehicleScreen extends StatelessWidget {
                   icon: Icon(
                     Icons.search,
                     size: AppSizes.vBigIconSize,
-                    color: AppColors.whiteColor,
+                    color: AppColors.white,
                   ),
                   style: ButtonStyle(
-                    backgroundColor:
-                        WidgetStatePropertyAll(AppColors.primaryColor),
+                    backgroundColor: WidgetStatePropertyAll(AppColors.primary),
                     shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(100))),
                   ),

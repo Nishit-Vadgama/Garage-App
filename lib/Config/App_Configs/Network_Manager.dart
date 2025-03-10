@@ -36,7 +36,7 @@ class Network_Controller extends GetxController {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               borderRadius: AppSizes.defaultBorderRadius,
-              color: AppColors.whiteColor,
+              color: AppColors.white,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -49,14 +49,14 @@ class Network_Controller extends GetxController {
                 ),
                 TText(
                   text: "No Internet Connection",
-                  fontColor: AppColors.redColor,
+                  fontColor: AppColors.red,
                   fontSize: AppSizes.headingSize,
                   fontWeight: FontWeight.bold,
                 ),
                 SizedBox(height: AppSizes.smallHeight),
                 TText(
                   text: "Please check your internet connection and try again.",
-                  fontColor: AppColors.textGrey,
+                  fontColor: AppColors.text,
                   maxLine: 2,
                   fontCentered: true,
                   fontSize: AppSizes.titleSize,
@@ -66,7 +66,7 @@ class Network_Controller extends GetxController {
           ),
         ),
         barrierDismissible: false,
-        barrierColor: AppColors.whiteColor,
+        barrierColor: AppColors.white,
       );
     } else {
       if (!connectivityResult.contains(ConnectivityResult.none)) {

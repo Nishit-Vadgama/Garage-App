@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../../Config/App_Configs/App_Colors.dart';
@@ -12,7 +13,6 @@ import '../../../../../Config/Config_Widgets/Image_Widget.dart';
 import '../../../../../Config/Config_Widgets/Shadowed_Container.dart';
 import '../../../../../Config/Config_Widgets/Text_Widget.dart';
 import '../../../../AppHelper/App_Master_Data.dart';
-import '../../../../Database/Database_Services.dart';
 import '../../../../Model/Service_Model.dart';
 import '../../../../Routes/App_Routes.dart';
 import 'Vehicle_Detail_Controller.dart';
@@ -26,11 +26,11 @@ class VehicleDetailScreen extends StatelessWidget {
         Get.put(VehicleDetailController(vehicleId: Get.arguments ?? ""));
 
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         title: TText(
           text: "Car Detail",
-          fontColor: AppColors.whiteColor,
+          fontColor: AppColors.white,
           fontSize: AppSizes.headingSize,
         ),
         actions: [
@@ -53,18 +53,17 @@ class VehicleDetailScreen extends StatelessWidget {
       // Add Services
       floatingActionButton: FloatingActionButton(
         tooltip: "Add Service",
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.primary,
         onPressed: () => Get.toNamed(AppRoutes.ADD_SERVICE),
         child: Icon(
           Iconsax.add,
           size: AppSizes.vBigIconSize + AppSizes.s8,
-          color: AppColors.primaryPastelColor,
+          color: AppColors.pastel,
         ),
       ),
       body: Obx(
         () => controller.isLoading.value
-            ? Center(
-                child: CircularProgressIndicator(color: AppColors.primaryColor))
+            ? Center(child: CircularProgressIndicator(color: AppColors.primary))
             : Padding(
                 padding: AppSizes.screenPadding,
                 child: Column(
@@ -78,24 +77,24 @@ class VehicleDetailScreen extends StatelessWidget {
                       width: double.infinity,
                     ),
                     AppListTile(
-                      backgroundColor: AppColors.primaryPastelColor,
+                      backgroundColor: AppColors.pastel,
                       prefixIcon: Iconsax.car,
                       title: controller.vehicle.ownerName.toString(),
                       subTitle:
                           "${controller.vehicle.numberPlate.toString()}\n${controller.vehicle.ownerPhoneNumber.toString()}",
                       subtitleSize: AppSizes.f16,
-                      titleColor: AppColors.primaryColor,
+                      titleColor: AppColors.primary,
                       onTap: () {},
                       suffixWidget: ShadowedContainer(
                         onTap: () => AppFunctions.makePhoneCall(
                             controller.vehicle.ownerPhoneNumber ?? ""),
                         isCircle: true,
                         padding: EdgeInsets.all(AppSizes.s12),
-                        backgroundColor: AppColors.primaryColor,
+                        backgroundColor: AppColors.primary,
                         child: Icon(
                           Iconsax.call,
                           size: AppSizes.bigIconSize,
-                          color: AppColors.primaryPastelColor,
+                          color: AppColors.pastel,
                         ),
                       ),
                     ),
@@ -104,7 +103,7 @@ class VehicleDetailScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Divider(
-                            color: AppColors.primaryColor,
+                            color: AppColors.primary,
                             thickness: 2,
                           ),
                         ),
@@ -115,84 +114,153 @@ class VehicleDetailScreen extends StatelessWidget {
                         Expanded(
                           child: Divider(
                             thickness: 2,
-                            color: AppColors.primaryColor,
+                            color: AppColors.primary,
                           ),
                         ),
                       ],
                     ),
                     Expanded(
-                      child: StreamBuilder(
-                        stream: DatabaseServices.getVehicleServices(
-                            vehicleId: controller.vehicleId),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(child: CircularProgressIndicator());
-                          }
-                          if (snapshot.hasError) {
-                            return Center(
-                                child: Text('Error: ${snapshot.error}'));
-                          }
-                          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                            return Center(child: Text('No Service found'));
-                          }
-                          List<Service> allServices = snapshot.data!;
-                          return ListView.separated(
-                            padding: EdgeInsets.zero,
-                            separatorBuilder: (context, index) =>
-                                SizedBox(height: AppSizes.smallHeight),
-                            itemCount: allServices.length,
-                            itemBuilder: (context, index) {
-                              Service service = allServices[index];
-                              return ShadowedContainer(
-                                padding: AppSizes.defaultPadding,
-                                shadowBlur: 0,
-                                child: Row(
-                                  spacing: AppSizes.mediumWidth,
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: AppColors.primaryColor,
-                                      child: Icon(
-                                        Iconsax.calendar_1,
-                                        size: AppSizes.bigIconSize,
-                                        color: AppColors.primaryPastelColor,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        spacing: AppSizes.smallHeight,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          TText(
-                                            text: AppMasterData.formatTimestamp(
-                                              service.endDate ??
-                                                  Timestamp.now(),
-                                            ),
-                                            fontColor: AppColors.primaryColor,
-                                            fontWeight: AppSizes.wBold,
-                                          ),
-                                          TText(
-                                            text: service.problems.toString(),
-                                            maxLine: 5,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    CircleAvatar(
-                                      radius: 10.sp,
-                                      backgroundColor: service.isDone == false
-                                          ? AppColors.redColor
-                                          : Colors.transparent,
-                                    ),
-                                  ],
+                      child: Obx(
+                        () => controller.serviceLoading.value
+                            ? Center(
+                                child: LoadingAnimationWidget
+                                    .horizontalRotatingDots(
+                                  color: AppColors.primary,
+                                  size: 30.sp,
                                 ),
-                              );
-                            },
-                          );
-                        },
+                              )
+                            : ListView.separated(
+                                padding: EdgeInsets.zero,
+                                separatorBuilder: (context, index) =>
+                                    SizedBox(height: AppSizes.smallHeight),
+                                itemCount: controller.vehicleServices.length,
+                                itemBuilder: (context, index) {
+                                  Service service =
+                                      controller.vehicleServices[index];
+                                  return ShadowedContainer(
+                                    padding: AppSizes.defaultPadding,
+                                    shadowBlur: 0,
+                                    child: Row(
+                                      spacing: AppSizes.mediumWidth,
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: AppColors.primary,
+                                          child: Icon(
+                                            Iconsax.calendar_1,
+                                            size: AppSizes.bigIconSize,
+                                            color: AppColors.pastel,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            spacing: AppSizes.smallHeight,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              TText(
+                                                text: AppMasterData
+                                                    .formatTimestamp(
+                                                  service.endDate ??
+                                                      Timestamp.now(),
+                                                ),
+                                                fontColor: AppColors.primary,
+                                                fontWeight: AppSizes.wBold,
+                                              ),
+                                              TText(
+                                                text:
+                                                    service.problems.toString(),
+                                                maxLine: 5,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        CircleAvatar(
+                                          radius: 10.sp,
+                                          backgroundColor:
+                                              service.isDone == false
+                                                  ? AppColors.red
+                                                  : Colors.transparent,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
                       ),
-                    ),
+                    )
+                    // Expanded(
+                    //   child: StreamBuilder(
+                    //     stream: DatabaseServices.getVehicleServices(
+                    //         vehicleId: controller.vehicleId),
+                    //     builder: (context, snapshot) {
+                    //       if (snapshot.connectionState ==
+                    //           ConnectionState.waiting) {
+                    //         return Center(child: CircularProgressIndicator());
+                    //       }
+                    //       if (snapshot.hasError) {
+                    //         return Center(
+                    //             child: Text('Error: ${snapshot.error}'));
+                    //       }
+                    //       if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    //         return Center(child: Text('No Service found'));
+                    //       }
+                    //       List<Service> allServices = snapshot.data!;
+                    //       return ListView.separated(
+                    //         padding: EdgeInsets.zero,
+                    //         separatorBuilder: (context, index) =>
+                    //             SizedBox(height: AppSizes.smallHeight),
+                    //         itemCount: allServices.length,
+                    //         itemBuilder: (context, index) {
+                    //           Service service = allServices[index];
+                    //           return ShadowedContainer(
+                    //             padding: AppSizes.defaultPadding,
+                    //             shadowBlur: 0,
+                    //             child: Row(
+                    //               spacing: AppSizes.mediumWidth,
+                    //               children: [
+                    //                 CircleAvatar(
+                    //                   backgroundColor: AppColors.primary,
+                    //                   child: Icon(
+                    //                     Iconsax.calendar_1,
+                    //                     size: AppSizes.bigIconSize,
+                    //                     color: AppColors.pastel,
+                    //                   ),
+                    //                 ),
+                    //                 Expanded(
+                    //                   child: Column(
+                    //                     spacing: AppSizes.smallHeight,
+                    //                     crossAxisAlignment:
+                    //                         CrossAxisAlignment.start,
+                    //                     children: [
+                    //                       TText(
+                    //                         text: AppMasterData.formatTimestamp(
+                    //                           service.endDate ??
+                    //                               Timestamp.now(),
+                    //                         ),
+                    //                         fontColor: AppColors.primary,
+                    //                         fontWeight: AppSizes.wBold,
+                    //                       ),
+                    //                       TText(
+                    //                         text: service.problems.toString(),
+                    //                         maxLine: 5,
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                 ),
+                    //                 CircleAvatar(
+                    //                   radius: 10.sp,
+                    //                   backgroundColor: service.isDone == false
+                    //                       ? AppColors.red
+                    //                       : Colors.transparent,
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //           );
+                    //         },
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

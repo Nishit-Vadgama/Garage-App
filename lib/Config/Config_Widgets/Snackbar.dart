@@ -9,8 +9,8 @@ App_Snackbar({required bool type, required String msg}) {
   Get.rawSnackbar(
     backgroundGradient: LinearGradient(
       colors: [
-        AppColors.whiteColor,
-        AppColors.whiteColor,
+        AppColors.white,
+        AppColors.white,
       ],
     ),
     messageText: TText(
@@ -18,7 +18,7 @@ App_Snackbar({required bool type, required String msg}) {
       fontSize: AppSizes.titleSize,
       fontWeight: AppSizes.wBold,
       maxLine: 2,
-      fontColor: type ? AppColors.blackColor : AppColors.redColor,
+      fontColor: type ? AppColors.black : AppColors.red,
     ),
     borderRadius: AppSizes.s18,
     snackPosition: SnackPosition.BOTTOM,
@@ -28,10 +28,10 @@ App_Snackbar({required bool type, required String msg}) {
     barBlur: 10,
     icon: Icon(
       type ? Icons.verified_outlined : Icons.error_outline,
-      color: type ? AppColors.blackColor : AppColors.redColor,
+      color: type ? AppColors.black : AppColors.red,
       size: AppSizes.bigIconSize,
     ),
     margin: EdgeInsets.all(AppSizes.s16),
-    backgroundColor: AppColors.whiteColor,
+    backgroundColor: AppColors.white,
   );
 }

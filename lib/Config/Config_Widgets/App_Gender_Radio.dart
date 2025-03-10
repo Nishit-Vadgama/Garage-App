@@ -20,7 +20,7 @@ Widget AppGenderRadio({
           margin: EdgeInsets.symmetric(horizontal: AppSizes.smallWidth),
           padding: EdgeInsets.all(AppSizes.s10),
           onTap: () => onChanged(option),
-          backgroundColor: AppColors.whiteColor,
+          backgroundColor: AppColors.white,
           child: Row(
             children: [
               Transform.scale(
@@ -30,7 +30,7 @@ Widget AppGenderRadio({
                   groupValue: groupValue,
                   visualDensity: VisualDensity.compact,
                   onChanged: (value) => onChanged(value!),
-                  activeColor: AppColors.primaryColor,
+                  activeColor: AppColors.primary,
                 ),
               ),
               SizedBox(width: AppSizes.s6),
