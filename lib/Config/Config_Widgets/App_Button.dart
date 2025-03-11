@@ -84,9 +84,10 @@ class AppButton extends StatelessWidget {
 class RoundButton extends StatelessWidget {
   final String text;
   final VoidCallback onPress;
-  final Color? backgroundColor, textColor;
+  final Color? backgroundColor, textColor, borderColor;
   final double? textSize;
   final bool isRightArrow;
+  final FontWeight? fontWeight;
   const RoundButton({
     super.key,
     required this.text,
@@ -95,12 +96,16 @@ class RoundButton extends StatelessWidget {
     this.textColor,
     this.textSize,
     this.isRightArrow = false,
+    this.fontWeight,
+    this.borderColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       style: ButtonStyle(
+        side: WidgetStatePropertyAll(
+            BorderSide(color: borderColor ?? AppColors.primary)),
         backgroundColor:
             WidgetStatePropertyAll(backgroundColor ?? Colors.transparent),
       ),
@@ -111,7 +116,7 @@ class RoundButton extends StatelessWidget {
         children: [
           TText(
             text: text,
-            fontWeight: FontWeight.bold,
+            fontWeight: fontWeight,
             fontSize: textSize,
             fontColor: textColor ?? AppColors.text,
           ),

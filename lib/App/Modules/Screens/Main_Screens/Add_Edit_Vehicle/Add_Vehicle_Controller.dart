@@ -71,8 +71,7 @@ class AddVehicleController extends GetxController {
                 : "Vehicle Added Successfully",
           );
           if (vehicle != null) {
-            Get.find<VehicleDetailController>()
-                .getVehicleById(vehicle?.vehicleId ?? "");
+            Get.find<VehicleDetailController>().getVehicleById();
           }
         }
       } catch (error) {

@@ -6,7 +6,7 @@ import '../App_Configs/App_Images.dart';
 import '../App_Configs/App_Sizes.dart';
 import 'Text_Widget.dart';
 
-Widget No_Data() {
+Widget No_Data({String? text}) {
   return Column(
     spacing: AppSizes.smallHeight,
     mainAxisAlignment: MainAxisAlignment.center,
@@ -19,7 +19,7 @@ Widget No_Data() {
         fit: BoxFit.cover,
       ),
       TText(
-        text: "No Data Found",
+        text: text ?? "No Data Found",
         fontWeight: AppSizes.wBold,
       ),
     ],

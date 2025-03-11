@@ -16,11 +16,11 @@ class VehicleDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getVehicleById(vehicleId);
+    getVehicleById();
     getVehicleServices();
   }
 
-  getVehicleById(vehicleId) async {
+  getVehicleById() async {
     isLoading.value = true;
     try {
       vehicle =
@@ -34,7 +34,6 @@ class VehicleDetailController extends GetxController {
 
   getVehicleServices() async {
     serviceLoading.value = true;
-
     try {
       vehicleServices.value =
           await DatabaseServices.getVehicleServices(vehicleId: vehicleId);

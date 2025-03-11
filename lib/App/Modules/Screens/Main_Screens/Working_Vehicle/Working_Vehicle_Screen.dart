@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:nv/Config/Config_Widgets/No_Data.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../../Config/App_Configs/App_Colors.dart';
@@ -8,8 +10,6 @@ import '../../../../../Config/App_Configs/App_Sizes.dart';
 import '../../../../../Config/Config_Widgets/Image_Widget.dart';
 import '../../../../../Config/Config_Widgets/Text_Field.dart';
 import '../../../../../Config/Config_Widgets/Text_Widget.dart';
-import '../../../../Database/Database_Services.dart';
-import '../../../../Model/Vehicle_Model.dart';
 import '../../../../Widgets/Car_Tile.dart';
 import 'Working_Vehicle_Controller.dart';
 
@@ -26,7 +26,6 @@ class WorkingVehicleScreen extends StatelessWidget {
           text: "Working Cars",
           fontSize: AppSizes.headingSize,
           fontColor: AppColors.white,
-          fontWeight: AppSizes.wBold,
         ),
       ),
       body: Padding(
@@ -73,57 +72,24 @@ class WorkingVehicleScreen extends StatelessWidget {
                 ),
               ],
             ),
-
             Expanded(
-              child: StreamBuilder<List<Vehicle>>(
-                stream: DatabaseServices.getWorkingVehicles(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  }
-                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Center(child: Text('No vehicles found'));
-                  }
-
-                  return Obx(
-                    () {
-                      List<Vehicle> allVehicles = snapshot.data!;
-                      // Filter vehicles based on search query
-                      RxList<Vehicle> filteredVehicles = allVehicles
-                          .where((vehicle) {
-                            return vehicle.numberPlate
-                                    .toString()
-                                    .toLowerCase()
-                                    .contains(controller.searchQuery.value) ||
-                                vehicle.ownerName
-                                    .toString()
-                                    .toLowerCase()
-                                    .contains(controller.searchQuery.value);
-                          })
-                          .toList()
-                          .obs;
-
-                      // Show message if no results match the search
-                      if (filteredVehicles.isEmpty) {
-                        return Center(
-                            child: Text('No matching vehicles found'));
-                      } else {
-                        return Obx(
-                          () => ListView.separated(
-                            itemCount: filteredVehicles.length,
+              child: Obx(
+                () => controller.isLoading.value
+                    ? Center(
+                        child: LoadingAnimationWidget.horizontalRotatingDots(
+                          color: AppColors.primary,
+                          size: 30.sp,
+                        ),
+                      )
+                    : controller.workingVehicles.isEmpty
+                        ? No_Data(text: "No Working Vehicles Found")
+                        : ListView.separated(
+                            itemCount: controller.workingVehicles.length,
                             separatorBuilder: (context, index) =>
                                 SizedBox(height: AppSizes.s14),
-                            itemBuilder: (context, index) =>
-                                CarTile(vehicle: filteredVehicles[index]),
+                            itemBuilder: (context, index) => VehicleTile(
+                                vehicle: controller.workingVehicles[index]),
                           ),
-                        );
-                      }
-                    },
-                  );
-                },
               ),
             ),
           ],

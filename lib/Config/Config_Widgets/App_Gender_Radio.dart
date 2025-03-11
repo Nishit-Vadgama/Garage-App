@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../App_Configs/App_Colors.dart';
 import '../App_Configs/App_Sizes.dart';
@@ -33,7 +34,7 @@ Widget AppGenderRadio({
                   activeColor: AppColors.primary,
                 ),
               ),
-              SizedBox(width: AppSizes.s6),
+              SizedBox(width: 4.sp),
               TText(text: option),
             ],
           ),

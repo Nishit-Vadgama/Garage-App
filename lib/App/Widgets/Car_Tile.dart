@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nv/App/Database/Database_Services.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../Config/App_Configs/App_Colors.dart';
@@ -10,10 +11,10 @@ import '../../Config/Config_Widgets/Text_Widget.dart';
 import '../Model/Vehicle_Model.dart';
 import '../Routes/App_Routes.dart';
 
-Widget CarTile({required Vehicle vehicle}) {
+Widget VehicleTile({required Vehicle vehicle}) {
   return ShadowedContainer(
-    onTap: () =>
-        Get.toNamed(AppRoutes.VEHICLE_DETAIL, arguments: vehicle.vehicleId),
+    onTap: () => Get.toNamed(AppRoutes.VEHICLE_DETAIL,
+        arguments: vehicle.vehicleId as String),
     backgroundColor: AppColors.pastel,
     shadowBlur: 0,
     padding: AppSizes.defaultPadding,
@@ -98,11 +99,15 @@ Widget CarTile({required Vehicle vehicle}) {
             ],
           ),
         ),
-        CircleAvatar(
-          radius: 10.sp,
-          backgroundColor:
-              vehicle.inWorkShop == true ? AppColors.green : AppColors.red,
-        ),
+        FutureBuilder(
+          future: DatabaseServices.isRunningService(
+              vehicleId: vehicle.vehicleId ?? ""),
+          builder: (context, snapshot) => CircleAvatar(
+            radius: 10.sp,
+            backgroundColor:
+                snapshot.data == true ? AppColors.green : Colors.transparent,
+          ),
+        )
       ],
     ),
   );

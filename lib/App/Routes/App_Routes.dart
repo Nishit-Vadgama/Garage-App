@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 import '../Modules/Screens/Auth/Login/Login_Screen.dart';
 import '../Modules/Screens/Auth/Splash/Splash_Screen.dart';
-import '../Modules/Screens/Main_Screens/Add_Service/Add_Service_Screen.dart';
-import '../Modules/Screens/Main_Screens/Add_Vehicle/Add_Vehicle_Screen.dart';
+import '../Modules/Screens/Main_Screens/Add_Edit_Service/Add_Edit_Service_Screen.dart';
+import '../Modules/Screens/Main_Screens/Add_Edit_Vehicle/Add_Vehicle_Screen.dart';
 import '../Modules/Screens/Main_Screens/Find_Vehicle/Find_Vehicle_Screen.dart';
 import '../Modules/Screens/Main_Screens/Home/Home_Screen.dart';
 import '../Modules/Screens/Main_Screens/Vehicle_Detail/Vehicle_Detail_Screen.dart';
@@ -74,7 +74,7 @@ class AppRoutes {
     ),
     GetPage(
       name: ADD_SERVICE,
-      page: () => AddServiceScreen(),
+      page: () => AddEditServiceScreen(),
       transition: Transition.rightToLeft,
       curve: Curves.easeIn,
       transitionDuration: const Duration(milliseconds: 400),

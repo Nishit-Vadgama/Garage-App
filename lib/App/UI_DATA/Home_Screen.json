@@ -1,0 +1,44 @@
+{
+  "backgroundColor": "white",
+  "appBar": {
+    "backgroundColor": "primary",
+    "title": "Home",
+    "textColor": "white"
+  },
+  "widgets": [
+    {
+      "spacing": 15,
+      "mainAxisExtent": 150,
+      "crossAxisCount": 2,
+      "type": "grid",
+      "items": [
+        {
+          "image":
+          "assets/Images/Home_Images/Working_Car.png",
+          "backgroundColor": "pastle",
+          "screen": "/working_vehicle",
+          "type": "container",
+          "title": "Working Car "
+        },
+        {
+          "image": "assets/Images/Home_Images/Find_Car.png",
+          "screen": "/find_vehicle",
+          "type": "container",
+          "title": "Find Car"
+        },
+        {
+          "image": "assets/Images/Home_Images/Add_Car.png",
+          "screen": "/add_vehicle",
+          "title": "Add Car",
+          "type": "container"
+        },
+        {
+          "image": "assets/Images/Home_Images/Revenue.png",
+          "screen": "",
+          "type": "container",
+          "title": "Revenue"
+        }
+      ]
+    }
+  ]
+}

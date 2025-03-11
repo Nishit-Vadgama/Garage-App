@@ -13,7 +13,9 @@ class AppColors {
   static Color grey = Colors.grey.shade200;
   static Color text = Color(0XFF7E7E7E);
   static Color red = Colors.red;
-  static Color green = Colors.greenAccent;
+  static Color green = Colors.green;
+  static Color redPastle = Color(0XFFFED0D2);
+  static Color greenPastle = Color(0XFFDCF6BE);
 }
 
 Color NvColor(String color) {

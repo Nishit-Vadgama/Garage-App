@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:logger/logger.dart';
 
@@ -17,9 +15,9 @@ class UIServices {
   static Future<Map<String, dynamic>> getHomeScreen() async {
     try {
       DocumentSnapshot snapshot =
-          await CollectionService.UICollection.doc("home_screen").get();
+          await CollectionService.UICollection.doc("Home_Screen").get();
       if (snapshot.exists) {
-        print(jsonEncode(snapshot.data()));
+        // print(jsonEncode(snapshot.data()));
         return snapshot.data() as Map<String, dynamic>;
       } else {
         return {};
