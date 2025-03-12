@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:nv/Config/Config_Widgets/Full_Screen_Image_Screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../../Config/App_Configs/App_Colors.dart';
@@ -10,11 +10,12 @@ import '../../../../../Config/App_Configs/App_Functions.dart';
 import '../../../../../Config/App_Configs/App_Sizes.dart';
 import '../../../../../Config/Config_Widgets/App_List_Tile.dart';
 import '../../../../../Config/Config_Widgets/Image_Widget.dart';
+import '../../../../../Config/Config_Widgets/No_Data.dart';
 import '../../../../../Config/Config_Widgets/Shadowed_Container.dart';
 import '../../../../../Config/Config_Widgets/Text_Widget.dart';
-import '../../../../AppHelper/App_Master_Data.dart';
 import '../../../../Model/Service_Model.dart';
 import '../../../../Routes/App_Routes.dart';
+import '../../../../Widgets/Service_Tile.dart';
 import 'Vehicle_Detail_Controller.dart';
 
 class VehicleDetailScreen extends StatelessWidget {
@@ -53,7 +54,8 @@ class VehicleDetailScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         tooltip: "Add Service",
         backgroundColor: AppColors.primary,
-        onPressed: () => Get.toNamed(AppRoutes.ADD_SERVICE),
+        onPressed: () => Get.toNamed(AppRoutes.ADD_SERVICE,
+            arguments: {"vehicleId": controller.vehicleId}),
         child: Icon(
           Iconsax.add,
           size: AppSizes.vBigIconSize + AppSizes.s8,
@@ -73,61 +75,75 @@ class VehicleDetailScreen extends StatelessWidget {
                   child: CircularProgressIndicator(color: AppColors.primary))
               : Padding(
                   padding: AppSizes.screenPadding,
-                  child: Column(
-                    spacing: AppSizes.smallHeight,
-                    children: [
-                      // Car Image
-                      ImageWidget(
-                        image: controller.vehicle.vehicleImage.toString(),
-                        height: 16.h,
-                        radius: 12,
-                        width: double.infinity,
-                      ),
-                      AppListTile(
-                        backgroundColor: AppColors.pastel,
-                        prefixIcon: Iconsax.car,
-                        title: controller.vehicle.ownerName.toString(),
-                        subTitle:
-                            "${controller.vehicle.numberPlate.toString()}\n${controller.vehicle.ownerPhoneNumber.toString()}",
-                        subtitleSize: AppSizes.f16,
-                        titleColor: AppColors.primary,
-                        onTap: () {},
-                        suffixWidget: ShadowedContainer(
-                          onTap: () => AppFunctions.makePhoneCall(
-                              controller.vehicle.ownerPhoneNumber ?? ""),
-                          isCircle: true,
-                          padding: EdgeInsets.all(AppSizes.s12),
-                          backgroundColor: AppColors.primary,
-                          child: Icon(
-                            Iconsax.call,
-                            size: AppSizes.bigIconSize,
-                            color: AppColors.pastel,
+                  child: SingleChildScrollView(
+                    physics:
+                        AlwaysScrollableScrollPhysics(), // Ensures refresh always works
+                    child: Column(
+                      spacing: AppSizes.smallHeight,
+                      children: [
+                        // Car Image
+                        InkWell(
+                          onTap: () => Get.to(FullScreenImageScreen(
+                              image:
+                                  controller.vehicle.vehicleImage.toString())),
+                          child: Hero(
+                            tag: controller.vehicle.vehicleImage.toString(),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: ImageWidget(
+                                image:
+                                    controller.vehicle.vehicleImage.toString(),
+                                height: 16.h,
+                                radius: 12,
+                                width: double.infinity,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      Row(
-                        spacing: AppSizes.mediumWidth,
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              color: AppColors.primary,
-                              thickness: 2,
+                        AppListTile(
+                          backgroundColor: AppColors.pastel,
+                          prefixIcon: Iconsax.car,
+                          title: controller.vehicle.ownerName.toString(),
+                          subTitle:
+                              "${controller.vehicle.numberPlate}\n${controller.vehicle.ownerPhoneNumber}",
+                          subtitleSize: AppSizes.f16,
+                          titleColor: AppColors.primary,
+                          onTap: () {},
+                          suffixWidget: ShadowedContainer(
+                            onTap: () => AppFunctions.makePhoneCall(
+                                controller.vehicle.ownerPhoneNumber ?? ""),
+                            isCircle: true,
+                            padding: EdgeInsets.all(AppSizes.s12),
+                            backgroundColor: AppColors.primary,
+                            child: Icon(
+                              Iconsax.call,
+                              size: AppSizes.bigIconSize,
+                              color: AppColors.pastel,
                             ),
                           ),
-                          TText(
-                            text: "All Services",
-                            fontCentered: false,
-                          ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 2,
-                              color: AppColors.primary,
+                        ),
+                        Row(
+                          spacing: AppSizes.mediumWidth,
+                          children: [
+                            Expanded(
+                              child: Divider(
+                                color: AppColors.primary,
+                                thickness: 2,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Expanded(
-                        child: Obx(
+                            TText(
+                              text: "All Services",
+                              fontCentered: false,
+                            ),
+                            Expanded(
+                              child: Divider(
+                                thickness: 2,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Obx(
                           () => controller.serviceLoading.value
                               ? Center(
                                   child: LoadingAnimationWidget
@@ -136,74 +152,29 @@ class VehicleDetailScreen extends StatelessWidget {
                                     size: 30.sp,
                                   ),
                                 )
-                              : ListView.separated(
-                                  padding: EdgeInsets.zero,
-                                  separatorBuilder: (context, index) =>
-                                      SizedBox(height: AppSizes.smallHeight),
-                                  itemCount: controller.vehicleServices.length,
-                                  itemBuilder: (context, index) {
-                                    Service service =
-                                        controller.vehicleServices[index];
-                                    return ShadowedContainer(
-                                      onTap: () => Get.toNamed(
-                                        AppRoutes.ADD_SERVICE,
-                                        arguments: {
-                                          "service": service.toJson(),
-                                          "vehicleId": controller.vehicleId
-                                        },
-                                      ),
-                                      backgroundColor: AppColors.white,
-                                      padding: AppSizes.defaultPadding,
-                                      shadowBlur: 0,
-                                      child: Row(
-                                        spacing: AppSizes.mediumWidth,
-                                        children: [
-                                          CircleAvatar(
-                                            backgroundColor: AppColors.primary,
-                                            child: Icon(
-                                              Iconsax.calendar_1,
-                                              size: AppSizes.bigIconSize,
-                                              color: AppColors.pastel,
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Column(
-                                              spacing: AppSizes.smallHeight,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                TText(
-                                                  text: AppMasterData
-                                                      .formatTimestamp(
-                                                    service.endDate ??
-                                                        Timestamp.now(),
-                                                  ),
-                                                  fontColor: AppColors.primary,
-                                                  fontWeight: AppSizes.wBold,
-                                                ),
-                                                TText(
-                                                  text: service.problems
-                                                      .toString(),
-                                                  maxLine: 5,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          CircleAvatar(
-                                            radius: 10.sp,
-                                            backgroundColor:
-                                                service.isDone == false
-                                                    ? AppColors.green
-                                                    : Colors.transparent,
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
+                              : controller.vehicleServices.isEmpty
+                                  ? No_Data(text: "No Services Found")
+                                  : ListView.separated(
+                                      padding: EdgeInsets.zero,
+                                      separatorBuilder: (context, index) =>
+                                          SizedBox(
+                                              height: AppSizes.smallHeight),
+                                      itemCount:
+                                          controller.vehicleServices.length,
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        Service service =
+                                            controller.vehicleServices[index];
+                                        return Service_Tile(
+                                          service: service,
+                                          vehicleId: controller.vehicleId,
+                                        );
+                                      },
+                                    ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
         ),

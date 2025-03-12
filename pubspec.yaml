@@ -43,6 +43,7 @@ dependencies:
   flutter_excel: ^1.0.1
   file_picker: ^8.3.3
   logger: ^2.5.0
+  keyboard_dismisser: ^3.0.0
 
 dev_dependencies:
   flutter_test:

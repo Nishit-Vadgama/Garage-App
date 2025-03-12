@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:nv/Config/Config_Widgets/No_Data.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../../Config/App_Configs/App_Colors.dart';
 import '../../../../../Config/App_Configs/App_Images.dart';
 import '../../../../../Config/App_Configs/App_Sizes.dart';
 import '../../../../../Config/Config_Widgets/Image_Widget.dart';
+import '../../../../../Config/Config_Widgets/No_Data.dart';
 import '../../../../../Config/Config_Widgets/Text_Field.dart';
 import '../../../../../Config/Config_Widgets/Text_Widget.dart';
 import '../../../../Widgets/Car_Tile.dart';
@@ -48,8 +48,7 @@ class FindVehicleScreen extends StatelessWidget {
                       isErrorShow: false,
                       label: "Search Car..",
                       textChangeFunction: (newValue) =>
-                          controller.searchQuery.value = newValue.toLowerCase(),
-                      // borderColor: AppColors.primaryColor.withOpacity(.8),
+                          controller.filterVehicleByName(newValue),
                       prefixIcon: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -86,14 +85,14 @@ class FindVehicleScreen extends StatelessWidget {
                             size: 30.sp,
                           ),
                         )
-                      : controller.allVehicles.isEmpty
+                      : controller.filteredVehicles.isEmpty
                           ? No_Data(text: "No Vehicles Found")
                           : ListView.separated(
-                              itemCount: controller.allVehicles.length,
+                              itemCount: controller.filteredVehicles.length,
                               separatorBuilder: (context, index) =>
                                   SizedBox(height: AppSizes.s14),
                               itemBuilder: (context, index) => VehicleTile(
-                                  vehicle: controller.allVehicles[index]),
+                                  vehicle: controller.filteredVehicles[index]),
                             ),
                 ),
               )

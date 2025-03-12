@@ -7,7 +7,6 @@ class Vehicle {
   String? model;
   String? ownerName;
   String? ownerPhoneNumber;
-  bool? inWorkShop;
   Timestamp? addedOn;
 
   Vehicle({
@@ -17,7 +16,6 @@ class Vehicle {
     this.model,
     this.ownerName,
     this.ownerPhoneNumber,
-    this.inWorkShop,
     this.addedOn,
   });
 
@@ -27,7 +25,6 @@ class Vehicle {
     numberPlate = json['numberPlate'];
     addedOn = json['addedOn'];
     model = json['model'];
-    inWorkShop = json['inWorkShop'];
     ownerName = json['ownerName'];
     ownerPhoneNumber = json['ownerPhoneNumber'];
   }
@@ -39,7 +36,6 @@ class Vehicle {
     data['numberPlate'] = numberPlate;
     data['addedOn'] = addedOn;
     data['model'] = model;
-    data['inWorkShop'] = inWorkShop;
     data['ownerName'] = ownerName;
     data['ownerPhoneNumber'] = ownerPhoneNumber;
 

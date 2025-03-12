@@ -38,7 +38,6 @@ class AddVehicleController extends GetxController {
     vehicleOwnerPhoneNumber.text = vehicle?.ownerPhoneNumber ?? "";
 
     addedOn = vehicle?.addedOn ?? Timestamp.now();
-    inWorkShop = vehicle?.inWorkShop ?? false;
   }
 
   void saveVehicle() async {
@@ -56,7 +55,6 @@ class AddVehicleController extends GetxController {
           ownerPhoneNumber: vehicleOwnerPhoneNumber.text.trim(),
           numberPlate: vehicleNumberPlate.text.trim(),
           model: vehicleModel.text.trim(),
-          inWorkShop: inWorkShop,
           addedOn: addedOn,
         );
         final isSuccess = vehicle != null

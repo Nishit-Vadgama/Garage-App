@@ -44,8 +44,8 @@ class WorkingVehicleScreen extends StatelessWidget {
                     isErrorShow: false,
                     label: "Search Car..",
                     textChangeFunction: (newValue) =>
-                        controller.searchQuery.value = newValue.toLowerCase(),
-                    // borderColor: AppColors.primaryColor.withOpacity(.8),
+                        controller.filterVehicleByName(
+                            newValue) /*controller.searchQuery.value = newValue.toLowerCase()*/,
                     prefixIcon: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -81,14 +81,14 @@ class WorkingVehicleScreen extends StatelessWidget {
                           size: 30.sp,
                         ),
                       )
-                    : controller.workingVehicles.isEmpty
+                    : controller.filteredVehicles.isEmpty
                         ? No_Data(text: "No Working Vehicles Found")
                         : ListView.separated(
-                            itemCount: controller.workingVehicles.length,
+                            itemCount: controller.filteredVehicles.length,
                             separatorBuilder: (context, index) =>
                                 SizedBox(height: AppSizes.s14),
                             itemBuilder: (context, index) => VehicleTile(
-                                vehicle: controller.workingVehicles[index]),
+                                vehicle: controller.filteredVehicles[index]),
                           ),
               ),
             ),

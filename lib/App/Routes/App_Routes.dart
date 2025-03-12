@@ -7,6 +7,7 @@ import '../Modules/Screens/Main_Screens/Add_Edit_Service/Add_Edit_Service_Screen
 import '../Modules/Screens/Main_Screens/Add_Edit_Vehicle/Add_Vehicle_Screen.dart';
 import '../Modules/Screens/Main_Screens/Find_Vehicle/Find_Vehicle_Screen.dart';
 import '../Modules/Screens/Main_Screens/Home/Home_Screen.dart';
+import '../Modules/Screens/Main_Screens/Revenue/Revenue_Screen.dart';
 import '../Modules/Screens/Main_Screens/Vehicle_Detail/Vehicle_Detail_Screen.dart';
 import '../Modules/Screens/Main_Screens/Working_Vehicle/Working_Vehicle_Screen.dart';
 
@@ -20,6 +21,7 @@ class AppRoutes {
   static const String FIND_VEHICLE = "/find_vehicle";
   static const String VEHICLE_DETAIL = "/vehicle_detail";
   static const String ADD_SERVICE = "/add_service";
+  static const String REVENUE = "/revenue";
 
   /////////// App Routes ///////////
   static final pages = [
@@ -75,6 +77,13 @@ class AppRoutes {
     GetPage(
       name: ADD_SERVICE,
       page: () => AddEditServiceScreen(),
+      transition: Transition.rightToLeft,
+      curve: Curves.easeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: REVENUE,
+      page: () => RevenueScreen(),
       transition: Transition.rightToLeft,
       curve: Curves.easeIn,
       transitionDuration: const Duration(milliseconds: 400),

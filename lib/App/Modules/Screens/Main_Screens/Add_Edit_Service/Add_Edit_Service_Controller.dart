@@ -20,7 +20,10 @@ class AddEditServiceController extends GetxController {
   String serviceId = "";
   RxBool isServiceDone = false.obs;
   Timestamp startDate = Timestamp.now();
-  Timestamp endDate = Timestamp.now();
+  Timestamp? endDate;
+  RxInt total = 0.obs;
+  RxInt servicesTotal = 0.obs;
+  RxInt itemsTotal = 0.obs;
 
   @override
   void onInit() {
@@ -34,7 +37,11 @@ class AddEditServiceController extends GetxController {
     isServiceDone.value = service!.isDone!;
     works.value = service!.work ?? [];
     startDate = service!.startDate!;
-    endDate = service!.endDate!;
+    endDate = service!.endDate;
+    total.value = service!.total!;
+    servicesTotal.value = service!.servicesTotal!;
+    itemsTotal.value = service!.itemsTotal!;
+    calculateTotal();
   }
 
   saveService() async {
@@ -46,12 +53,15 @@ class AddEditServiceController extends GetxController {
         problems: problemController.text.trim(),
         isDone: isServiceDone.value,
         startDate: startDate,
-        endDate: endDate,
+        endDate: isServiceDone.value ? Timestamp.now() : null,
         work: works,
+        total: total.value,
+        servicesTotal: servicesTotal.value,
+        itemsTotal: itemsTotal.value,
       );
 
       bool isSuccess = await DatabaseServices.addOrUpdateVehicleService(
-        vehicleId: vehicleId.toString(),
+        vehicleId: vehicleId ?? "",
         service: service,
       );
       if (isSuccess) {
@@ -66,11 +76,28 @@ class AddEditServiceController extends GetxController {
 
   addWork() {
     works.add(Work(workTitle: "", workDescription: ""));
+    calculateTotal();
     works.refresh();
   }
 
   removeWork(int index) {
     works.removeAt(index);
+    calculateTotal();
     works.refresh();
+  }
+
+  calculateTotal() {
+    total.value = works.fold<int>(
+        0,
+        (previousValue, element) =>
+            previousValue +
+            (element.itemCost ?? 0) +
+            (element.serviceCost ?? 0));
+
+    servicesTotal.value = works.fold<int>(0,
+        (previousValue, element) => previousValue + (element.serviceCost ?? 0));
+
+    itemsTotal.value = works.fold<int>(
+        0, (previousValue, element) => previousValue + (element.itemCost ?? 0));
   }
 }

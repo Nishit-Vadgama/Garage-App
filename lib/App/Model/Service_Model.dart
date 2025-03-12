@@ -7,6 +7,9 @@ class Service {
   Timestamp? endDate;
   String? serviceId;
   String? problems;
+  int? total;
+  int? servicesTotal;
+  int? itemsTotal;
   bool? isDone;
   List<Work>? work;
 
@@ -17,6 +20,9 @@ class Service {
     this.problems,
     this.isDone,
     this.work,
+    this.total,
+    this.itemsTotal,
+    this.servicesTotal,
   });
 
   Service.fromJson(Map<String, dynamic> json) {
@@ -25,6 +31,9 @@ class Service {
     serviceId = json['serviceId'];
     problems = json['problems'];
     isDone = json['isDone'];
+    total = json['total'];
+    itemsTotal = json['itemsTotal'];
+    servicesTotal = json['servicesTotal'];
     if (json['work'] != null) {
       work = <Work>[];
       json['work'].forEach((v) {
@@ -40,6 +49,9 @@ class Service {
     data['serviceId'] = serviceId;
     data['problems'] = problems;
     data['isDone'] = isDone;
+    data['total'] = total;
+    data['itemsTotal'] = itemsTotal;
+    data['servicesTotal'] = servicesTotal;
     if (work != null) {
       data['work'] = work!.map((v) => v.toJson()).toList();
     }

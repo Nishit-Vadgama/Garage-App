@@ -119,13 +119,9 @@ class DatabaseServices {
           .collection("Services")
           .get();
 
-      print("ALL SERVICES --> $services");
-
       // Correct mapping of documents
       List<Service> myList =
           services.docs.map((doc) => Service.fromJson(doc.data())).toList();
-
-      print("SERVICES --> $myList");
       return myList;
     } catch (error) {
       logger.e("Error while getting vehicles Services --> $error");
@@ -149,14 +145,19 @@ class DatabaseServices {
     required String vehicleId,
     required Service service,
   }) async {
-    try {
-      final serviceRef = CollectionService.VehicleCollection.doc(vehicleId)
-          .collection("Services")
-          .doc(service.serviceId!.isEmpty ? null : service.serviceId);
+    print("VEHICLE ID --> $vehicleId");
+    print("SERVICE --> ${service.toJson()}");
 
-      if (service.serviceId!.isEmpty) {
-        service.serviceId = serviceRef.id;
+    try {
+      final serviceCollection =
+          CollectionService.VehicleCollection.doc(vehicleId)
+              .collection("Services");
+
+      if (service.serviceId == null || service.serviceId!.isEmpty) {
+        service.serviceId = serviceCollection.doc().id;
       }
+
+      final serviceRef = serviceCollection.doc(service.serviceId!);
 
       await serviceRef.set(service.toJson(), SetOptions(merge: true));
       return true;

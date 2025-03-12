@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../Config_Widgets/App_Button.dart';
@@ -406,8 +405,8 @@ class AppDialogs {
     final ImagePicker picker = ImagePicker();
 
     try {
-      final List<XFile>? pickedFiles = await picker.pickMultiImage();
-      if (pickedFiles != null && pickedFiles.isNotEmpty) {
+      final List<XFile> pickedFiles = await picker.pickMultiImage();
+      if (pickedFiles.isNotEmpty) {
         App_Snackbar(type: true, msg: "Images Uploaded Successfully");
         return pickedFiles.map((e) => e.path).toList();
       } else {
@@ -416,34 +415,6 @@ class AppDialogs {
       }
     } catch (error) {
       App_Snackbar(type: false, msg: "Error picking images: $error");
-      return null;
-    }
-
-    PermissionStatus status = await Permission.photos.status;
-    if (status.isDenied) {
-      status = await Permission.photos.request();
-    }
-
-    if (status.isGranted || status.isLimited) {
-      try {
-        final List<XFile>? pickedFiles = await picker.pickMultiImage();
-        if (pickedFiles != null && pickedFiles.isNotEmpty) {
-          App_Snackbar(type: true, msg: "Images Uploaded Successfully");
-          return pickedFiles.map((e) => e.path).toList();
-        } else {
-          App_Snackbar(type: false, msg: "No Images Selected");
-          return null;
-        }
-      } catch (error) {
-        App_Snackbar(type: false, msg: "Error picking images: $error");
-        return null;
-      }
-    } else {
-      App_Snackbar(
-          type: false,
-          msg: "Permission Denied. Please enable it from settings.");
-
-      await openAppSettings();
       return null;
     }
   }

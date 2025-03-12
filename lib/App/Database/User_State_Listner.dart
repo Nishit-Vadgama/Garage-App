@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import '../AppHelper/App_Preference.dart';
 import 'Collection_Service.dart';
@@ -57,19 +58,19 @@ class UserStateListenerService extends GetxController {
         bool isActive = usersDocuments.get('isActive') ?? false;
 
         if (isActive == false) {
-          print("User is inactive. Logging out...");
+          Logger().e("User is inactive. Logging out...");
           AppPreference.logout();
           return false;
         } else {
           return true;
         }
       } else {
-        print("User document not found. Logging out...");
+        Logger().e("User document not found. Logging out...");
         AppPreference.logout();
         return false;
       }
     } catch (e) {
-      print('Error checking user status from Firestore: $e');
+      Logger().e("Error checking user status from Firestore: ", error: e);
       return false;
     }
   }

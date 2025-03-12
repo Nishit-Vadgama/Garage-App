@@ -105,7 +105,7 @@ Widget VehicleTile({required Vehicle vehicle}) {
           builder: (context, snapshot) => CircleAvatar(
             radius: 10.sp,
             backgroundColor:
-                snapshot.data == true ? AppColors.green : Colors.transparent,
+                snapshot.data == true ? AppColors.primary : Colors.transparent,
           ),
         )
       ],
