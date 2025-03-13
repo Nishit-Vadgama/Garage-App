@@ -20,6 +20,12 @@ Widget Service_Tile({required Service service, required String vehicleId}) {
     ),
     backgroundColor: AppColors.white,
     padding: AppSizes.defaultPadding,
+    border: Border(
+        right: BorderSide(
+            color: service.isDone == false
+                ? AppColors.primary
+                : Colors.transparent,
+            width: 7.5)),
     shadowBlur: 0,
     child: Row(
       spacing: AppSizes.mediumWidth,
@@ -108,11 +114,6 @@ Widget Service_Tile({required Service service, required String vehicleId}) {
               ),
             ],
           ),
-        ),
-        CircleAvatar(
-          radius: 10.sp,
-          backgroundColor:
-              service.isDone == false ? AppColors.primary : Colors.transparent,
         ),
       ],
     ),

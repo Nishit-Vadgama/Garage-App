@@ -22,7 +22,7 @@ class AppDialogs {
   AppDialogs._internal();
   factory AppDialogs() => _instance;
 
-  static Future<String?> DatePicker(BuildContext context,
+  static Future<DateTime?> DatePicker(BuildContext context,
       {String? returnDateFormat}) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -68,7 +68,8 @@ class AppDialogs {
       },
     );
     if (pickedDate != null) {
-      return DateFormat(returnDateFormat ?? 'dd-MM-yyyy').format(pickedDate);
+      return pickedDate;
+      // return DateFormat(returnDateFormat ?? 'dd-MM-yyyy').format(pickedDate);
     } else {
       return null;
     }

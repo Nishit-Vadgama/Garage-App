@@ -145,9 +145,6 @@ class DatabaseServices {
     required String vehicleId,
     required Service service,
   }) async {
-    print("VEHICLE ID --> $vehicleId");
-    print("SERVICE --> ${service.toJson()}");
-
     try {
       final serviceCollection =
           CollectionService.VehicleCollection.doc(vehicleId)
@@ -164,6 +161,35 @@ class DatabaseServices {
     } catch (error) {
       logger.e("Error while addOrUpdateVehicleService --> $error");
       return false;
+    }
+  }
+
+  static Future<List<Service>> getAllServiceForGivenDate(
+      DateTime fromDate, DateTime toDate) async {
+    try {
+      List<Service> servicesList = [];
+
+      QuerySnapshot vehicleSnapshot =
+          await CollectionService.VehicleCollection.get();
+
+      for (var vehicleDoc in vehicleSnapshot.docs) {
+        QuerySnapshot serviceSnapshot = await vehicleDoc.reference
+            .collection('Services')
+            .where('endDate',
+                isGreaterThanOrEqualTo: Timestamp.fromDate(fromDate))
+            .where('endDate', isLessThanOrEqualTo: Timestamp.fromDate(toDate))
+            .get();
+
+        for (var serviceDoc in serviceSnapshot.docs) {
+          servicesList.add(Service.fromJson(serviceDoc.data()));
+        }
+      }
+      print(
+          "SERVICES --> ${servicesList.map((e) => print(e.toJson())).toList()}");
+      return servicesList;
+    } catch (error) {
+      print("Error while fetching services: $error");
+      return [];
     }
   }
 }

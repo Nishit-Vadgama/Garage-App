@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:nv/App/AppHelper/App_Master_Data.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../App_Configs/App_Colors.dart';
@@ -400,10 +401,13 @@ class DobTextField extends StatelessWidget {
                           padding: WidgetStatePropertyAll(
                               EdgeInsets.only(right: AppSizes.mediumWidth))),
                       onPressed: () async {
-                        String? pickedDate =
+                        DateTime? pickedDate =
                             await AppDialogs.DatePicker(context);
-                        if (pickedDate != null) {
-                          controller.text = pickedDate;
+                        String pickedDateString = pickedDate != null
+                            ? AppMasterData.dateToString(pickedDate)
+                            : "";
+                        if (pickedDateString.isNotEmpty) {
+                          controller.text = pickedDateString;
                         }
                       },
                     ),

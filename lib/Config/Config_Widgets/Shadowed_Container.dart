@@ -10,6 +10,7 @@ class ShadowedContainer extends StatelessWidget {
   final EdgeInsets? padding, margin;
   final bool isBorder, isCircle;
   final VoidCallback? onTap, longPress;
+  final BoxBorder? border;
   const ShadowedContainer({
     super.key,
     this.backgroundColor,
@@ -27,6 +28,7 @@ class ShadowedContainer extends StatelessWidget {
     this.isCircle = false,
     this.margin,
     this.longPress,
+    this.border,
   });
 
   @override
@@ -45,12 +47,13 @@ class ShadowedContainer extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
           color: backgroundColor ?? AppColors.grey,
-          border: isBorder == true
-              ? Border.all(
-                  color: borderColor ?? AppColors.grey,
-                  width: borderWidth ?? 3,
-                )
-              : null,
+          border: border ??
+              (isBorder == true
+                  ? Border.all(
+                      color: borderColor ?? AppColors.grey,
+                      width: borderWidth ?? 3,
+                    )
+                  : null),
           shape: isCircle ? BoxShape.circle : BoxShape.rectangle,
           borderRadius: isCircle
               ? null
