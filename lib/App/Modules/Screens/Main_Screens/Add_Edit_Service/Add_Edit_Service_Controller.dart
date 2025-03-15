@@ -52,6 +52,7 @@ class AddEditServiceController extends GetxController {
     } else {
       Service service = Service(
         serviceId: serviceId,
+        vehicleId: vehicleId,
         problems: problemController.text.trim(),
         isDone: isServiceDone.value,
         startDate: startDate,
@@ -60,7 +61,6 @@ class AddEditServiceController extends GetxController {
         total: total.value,
         servicesTotal: servicesTotal.value,
         itemsTotal: itemsTotal.value,
-        vehicleId: vehicleId,
       );
 
       if (isServiceDone.value && works.isEmpty) {
