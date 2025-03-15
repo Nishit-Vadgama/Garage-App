@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
-import 'package:nv/App/Database/Database_Services.dart';
-import 'package:nv/App/Model/Service_Model.dart';
-import 'package:nv/App/Model/Vehicle_Model.dart';
-import 'package:nv/Config/Config_Widgets/Snackbar.dart';
+
+import '../../../../../Config/Config_Widgets/Snackbar.dart';
+import '../../../../Database/Database_Services.dart';
+import '../../../../Model/Service_Model.dart';
+import '../../../../Model/Vehicle_Model.dart';
 
 class VehicleDetailController extends GetxController {
   final String vehicleId;

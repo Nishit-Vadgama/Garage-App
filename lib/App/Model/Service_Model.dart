@@ -6,6 +6,7 @@ class Service {
   Timestamp? startDate;
   Timestamp? endDate;
   String? serviceId;
+  String? vehicleId;
   String? problems;
   int? total;
   int? servicesTotal;
@@ -22,6 +23,7 @@ class Service {
     this.work,
     this.total,
     this.itemsTotal,
+    this.vehicleId,
     this.servicesTotal,
   });
 
@@ -33,6 +35,7 @@ class Service {
     isDone = json['isDone'];
     total = json['total'];
     itemsTotal = json['itemsTotal'];
+    vehicleId = json['vehicleId'];
     servicesTotal = json['servicesTotal'];
     if (json['work'] != null) {
       work = <Work>[];
@@ -52,6 +55,7 @@ class Service {
     data['total'] = total;
     data['itemsTotal'] = itemsTotal;
     data['servicesTotal'] = servicesTotal;
+    data['vehicleId'] = vehicleId;
     if (work != null) {
       data['work'] = work!.map((v) => v.toJson()).toList();
     }

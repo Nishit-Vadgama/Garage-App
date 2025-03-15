@@ -19,21 +19,16 @@ class AddEditServiceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Service? service = Get.arguments['service'] != null
+    Service service = Get.arguments['service'] != null
         ? Service.fromJson(Get.arguments['service'])
-        : null;
-    final controller = Get.put(
-      AddEditServiceController(
-        service: service,
-        vehicleId: Get.arguments['vehicleId'] ?? "",
-      ),
-    );
+        : Service(vehicleId: Get.arguments['vehicleId']);
+    final controller = Get.put(AddEditServiceController(service: service));
     return KeyboardDismisser(
       child: Scaffold(
         backgroundColor: AppColors.pastel,
         appBar: AppBar(
           title: TText(
-            text: service != null ? "Edit Service" : "Add Service",
+            text: service.serviceId != null ? "Edit Service" : "Add Service",
             fontColor: AppColors.white,
             fontSize: AppSizes.headingSize,
           ),
@@ -181,137 +176,157 @@ class AddEditServiceScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: Obx(
-                    () => ListView.separated(
-                        padding: EdgeInsets.symmetric(
-                            vertical: AppSizes.smallHeight),
-                        separatorBuilder: (context, index) =>
-                            SizedBox(height: AppSizes.smallHeight),
-                        itemCount: controller.works.length,
-                        itemBuilder: (context, index) {
-                          Work work = controller.works[index];
-                          return Column(
-                            spacing: AppSizes.smallHeight,
-                            children: [
-                              ShadowedContainer(
-                                padding: AppSizes.defaultPadding,
-                                backgroundColor: AppColors.white,
-                                shadowBlur: 0,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    ShadowTextField(
-                                      controller: TextEditingController(
-                                          text: work.workTitle ?? ""),
-                                      label: "Work",
-                                      prefixIcon: Icon(
-                                        Iconsax.receipt,
-                                        size: AppSizes.bigIconSize,
-                                        color: AppColors.primary,
+                    () {
+                      if (controller.works.isEmpty) {
+                        return Center(
+                          child: RoundButton(
+                            width: double.infinity,
+                            text: "Add Work +",
+                            onPress: () => controller.addWork(),
+                            textColor: AppColors.primary,
+                            fontWeight: AppSizes.wBold,
+                            backgroundColor: AppColors.white,
+                            borderColor: AppColors.primary,
+                          ),
+                        );
+                      }
+
+                      return ListView.separated(
+                          padding: EdgeInsets.symmetric(
+                              vertical: AppSizes.smallHeight),
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: AppSizes.smallHeight),
+                          itemCount: controller.works.length,
+                          itemBuilder: (context, index) {
+                            Work work = controller.works[index];
+                            return Column(
+                              spacing: AppSizes.smallHeight,
+                              children: [
+                                ShadowedContainer(
+                                  padding: AppSizes.defaultPadding,
+                                  backgroundColor: AppColors.white,
+                                  shadowBlur: 0,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ShadowTextField(
+                                        controller: TextEditingController(
+                                            text: work.workTitle ?? ""),
+                                        label: "Work",
+                                        prefixIcon: Icon(
+                                          Iconsax.receipt,
+                                          size: AppSizes.bigIconSize,
+                                          color: AppColors.primary,
+                                        ),
+                                        textChangeFunction: (newValue) {
+                                          work.workTitle = newValue;
+                                        },
                                       ),
-                                      textChangeFunction: (newValue) {
-                                        work.workTitle = newValue;
-                                      },
-                                    ),
-                                    ShadowTextField(
-                                      controller: TextEditingController(
-                                          text: work.workDescription ?? ""),
-                                      minLines: 2,
-                                      maxLines: 2,
-                                      label: "Description",
-                                      textChangeFunction: (newValue) {
-                                        work.workDescription = newValue;
-                                      },
-                                      prefixIcon: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                      ShadowTextField(
+                                        controller: TextEditingController(
+                                            text: work.workDescription ?? ""),
+                                        minLines: 2,
+                                        maxLines: 2,
+                                        label: "Description",
+                                        textChangeFunction: (newValue) {
+                                          work.workDescription = newValue;
+                                        },
+                                        prefixIcon: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Icon(
+                                              Iconsax.message,
+                                              size: AppSizes.bigIconSize,
+                                              color: AppColors.primary,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        spacing: AppSizes.mediumWidth,
                                         children: [
-                                          Icon(
-                                            Iconsax.message,
-                                            size: AppSizes.bigIconSize,
-                                            color: AppColors.primary,
+                                          Expanded(
+                                            child: ShadowTextField(
+                                              controller: TextEditingController(
+                                                  text: (work.itemCost ?? "")
+                                                      .toString()),
+                                              label: "Item Cost",
+                                              prefixIcon: Icon(
+                                                FontAwesomeIcons
+                                                    .indianRupeeSign,
+                                                size: AppSizes.iconSize,
+                                                color: AppColors.primary,
+                                              ),
+                                              keyboardType: TextInputType.phone,
+                                              textChangeFunction: (newValue) {
+                                                work.itemCost = int.parse(
+                                                    newValue.isEmpty
+                                                        ? "0"
+                                                        : newValue);
+                                                controller.calculateTotal();
+                                              },
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: ShadowTextField(
+                                              controller: TextEditingController(
+                                                  text: (work.serviceCost ?? "")
+                                                      .toString()),
+                                              label: "Service Cost",
+                                              prefixIcon: Icon(
+                                                FontAwesomeIcons
+                                                    .indianRupeeSign,
+                                                size: AppSizes.iconSize,
+                                                color: AppColors.primary,
+                                              ),
+                                              keyboardType: TextInputType.phone,
+                                              textChangeFunction: (newValue) {
+                                                work.serviceCost = int.parse(
+                                                    newValue.isEmpty
+                                                        ? "0"
+                                                        : newValue);
+                                                controller.calculateTotal();
+                                              },
+                                            ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                    Row(
-                                      spacing: AppSizes.mediumWidth,
-                                      children: [
-                                        Expanded(
-                                          child: ShadowTextField(
-                                            controller: TextEditingController(
-                                                text: (work.itemCost ?? "")
-                                                    .toString()),
-                                            label: "Item Cost",
-                                            prefixIcon: Icon(
-                                              FontAwesomeIcons.indianRupeeSign,
-                                              size: AppSizes.iconSize,
-                                              color: AppColors.primary,
-                                            ),
-                                            keyboardType: TextInputType.phone,
-                                            textChangeFunction: (newValue) {
-                                              work.itemCost = int.parse(
-                                                  newValue.isEmpty
-                                                      ? "0"
-                                                      : newValue);
-                                              controller.calculateTotal();
-                                            },
+                                      if (index != 0)
+                                        SizedBox(height: AppSizes.smallHeight),
+                                      if (index != 0)
+                                        SizedBox(
+                                          width: double.infinity,
+                                          child: RoundButton(
+                                            borderColor: Colors.transparent,
+                                            text: "Remove Work -",
+                                            onPress: () =>
+                                                controller.removeWork(index),
+                                            textColor: AppColors.red,
+                                            backgroundColor:
+                                                AppColors.redPastle,
                                           ),
                                         ),
-                                        Expanded(
-                                          child: ShadowTextField(
-                                            controller: TextEditingController(
-                                                text: (work.serviceCost ?? "")
-                                                    .toString()),
-                                            label: "Service Cost",
-                                            prefixIcon: Icon(
-                                              FontAwesomeIcons.indianRupeeSign,
-                                              size: AppSizes.iconSize,
-                                              color: AppColors.primary,
-                                            ),
-                                            keyboardType: TextInputType.phone,
-                                            textChangeFunction: (newValue) {
-                                              work.serviceCost = int.parse(
-                                                  newValue.isEmpty
-                                                      ? "0"
-                                                      : newValue);
-                                              controller.calculateTotal();
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    if (index != 0)
-                                      SizedBox(height: AppSizes.smallHeight),
-                                    if (index != 0)
-                                      SizedBox(
-                                        width: double.infinity,
-                                        child: RoundButton(
-                                          borderColor: Colors.transparent,
-                                          text: "Remove Work -",
-                                          onPress: () =>
-                                              controller.removeWork(index),
-                                          textColor: AppColors.red,
-                                          backgroundColor: AppColors.redPastle,
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                              if (controller.works.length - 1 == index)
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: RoundButton(
-                                    text: "Add Work +",
-                                    onPress: () => controller.addWork(),
-                                    textColor: AppColors.primary,
-                                    fontWeight: AppSizes.wBold,
-                                    backgroundColor: AppColors.white,
-                                    borderColor: AppColors.primary,
+                                    ],
                                   ),
-                                )
-                            ],
-                          );
-                        }),
+                                ),
+                                if (controller.works.length - 1 == index)
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: RoundButton(
+                                      text: "Add Work +",
+                                      onPress: () => controller.addWork(),
+                                      textColor: AppColors.primary,
+                                      fontWeight: AppSizes.wBold,
+                                      backgroundColor: AppColors.white,
+                                      borderColor: AppColors.primary,
+                                    ),
+                                  ),
+                              ],
+                            );
+                          });
+                    },
                   ),
                 ),
               ],

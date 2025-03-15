@@ -177,103 +177,100 @@ class ShadowTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final focusNode = FocusNode();
-    final isFocused = false.obs;
     final errorText = ''.obs;
-
-    focusNode.addListener(() {
-      isFocused.value = focusNode.hasFocus;
-    });
 
     return Obx(
       () {
-        final currentShadowColor = isReadOnly
-            ? AppColors.shadow
-            : isFocused.value
-                ? focusColor ?? AppColors.primary
-                : AppColors.shadow;
+        print(errorText);
+        // final currentShadowColor = isReadOnly
+        //     ? AppColors.shadow
+        //     : isFocused.value
+        //         ? focusColor ?? AppColors.primary
+        //         : AppColors.shadow;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: backgroundColor ?? AppColors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: currentShadowColor,
-                    blurStyle: BlurStyle.outer,
-                    blurRadius: double.parse(shadowBlur.toString()),
-                  ),
-                ],
-                border: Border.all(
-                    color: borderColor ?? Colors.transparent, width: 1.5),
-                borderRadius: AppSizes.defaultBorderRadius,
+            TextFormField(
+              onTap: onTap,
+              readOnly: isReadOnly,
+              // focusNode: focusNode,
+              minLines: minLines,
+              maxLines: maxLines,
+              maxLength: maxLength,
+              obscureText: obscure,
+              controller: controller,
+              style: TextStyle(
+                fontSize: AppSizes.titleSize,
+                fontWeight: FontWeight.bold,
+                color: AppColors.black,
               ),
-              child: TextFormField(
-                onTap: onTap,
-                readOnly: isReadOnly,
-                focusNode: focusNode,
-                minLines: minLines,
-                maxLines: maxLines,
-                maxLength: maxLength,
-                obscureText: obscure,
-                controller: controller,
-                style: TextStyle(
-                  fontSize: AppSizes.titleSize,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.black,
-                ),
-                onFieldSubmitted: submittedFunction,
-                onChanged: textChangeFunction,
-                textInputAction: textInputAction,
-                validator: (value) {
-                  var error = validator?.call(value);
+              onFieldSubmitted: submittedFunction,
+              onChanged: textChangeFunction,
+              textInputAction: textInputAction,
+              validator: (value) {
+                var error = validator?.call(value);
 
-                  if (value.toString().isEmpty) {
-                    error = "$label is Required";
-                  }
-                  if (error != null) {
-                    return errorText.value = error;
-                  } else {
-                    errorText.value = "";
-                    return null;
-                  }
-                },
-                cursorColor: AppColors.primary,
-                textCapitalization: isCapitalWords == true
-                    ? TextCapitalization.words
-                    : TextCapitalization.none,
-                keyboardType: keyboardType,
-                inputFormatters: inputFormatters,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  counterText: "",
-                  suffixIcon: suffixIcon != null
-                      ? Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: AppSizes.s12),
-                          child: suffixIcon,
-                        )
-                      : suffixIcon,
-                  prefixIcon: prefixIcon != null
-                      ? Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: AppSizes.s12),
-                          child: prefixIcon,
-                        )
-                      : null,
-                  errorStyle: TextStyle(fontSize: 0),
-                  contentPadding: padding ?? AppSizes.defaultPadding,
-                  hintText: label,
-                  hintStyle: TextStyle(
-                    fontWeight: AppSizes.wBold,
-                    fontSize: hintSize ?? AppSizes.titleSize,
-                    color: labelColor ?? AppColors.text,
-                  ),
+                if (value.toString().isEmpty) {
+                  error = "$label is Required";
+                }
+                if (error != null) {
+                  return errorText.value = error;
+                } else {
+                  errorText.value = "";
+                  return null;
+                }
+              },
+              cursorColor: AppColors.primary,
+              textCapitalization: isCapitalWords == true
+                  ? TextCapitalization.words
+                  : TextCapitalization.none,
+              keyboardType: keyboardType,
+              inputFormatters: inputFormatters,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: AppColors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: AppColors.text),
                 ),
-                textAlignVertical: TextAlignVertical.center,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: AppColors.text.withOpacity(.4)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: AppColors.primary, width: 1.3),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide:
+                      BorderSide(color: AppColors.redPastle, width: 1.3),
+                ),
+                counterText: "",
+                suffixIcon: suffixIcon != null
+                    ? Padding(
+                        padding: EdgeInsets.symmetric(horizontal: AppSizes.s12),
+                        child: suffixIcon,
+                      )
+                    : suffixIcon,
+                prefixIcon: prefixIcon != null
+                    ? Padding(
+                        padding: EdgeInsets.symmetric(horizontal: AppSizes.s12),
+                        child: prefixIcon,
+                      )
+                    : null,
+                errorStyle: TextStyle(fontSize: 0),
+                contentPadding: padding ?? AppSizes.defaultPadding,
+                // hintText: label,
+                label: label != null ? TText(text: label!) : null,
+                // hintStyle: TextStyle(
+                //   fontWeight: AppSizes.wBold,
+                //   fontSize: hintSize ?? AppSizes.titleSize,
+                //   color: labelColor ?? AppColors.text,
+                // ),
               ),
+              textAlignVertical: TextAlignVertical.center,
             ),
             if (isErrorShow)
               Container(

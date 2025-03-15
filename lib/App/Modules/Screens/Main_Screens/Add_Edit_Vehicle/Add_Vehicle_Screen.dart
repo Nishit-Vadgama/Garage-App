@@ -47,6 +47,7 @@ class AddVehicleScreen extends StatelessWidget {
 
                 // Owner Name
                 ShadowTextField(
+                  maxLength: 40,
                   controller: controller.vehicleOwnerName,
                   label: "Name",
                   prefixIcon: Icon(
@@ -84,6 +85,7 @@ class AddVehicleScreen extends StatelessWidget {
 
                 // Vehicle Model
                 ShadowTextField(
+                  maxLength: 45,
                   controller: controller.vehicleModel,
                   label: "Model",
                   prefixIcon: Icon(

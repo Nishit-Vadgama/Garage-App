@@ -36,12 +36,6 @@ class AppMasterData {
     return Color(int.parse(hex, radix: 16));
   }
 
-  // static Future<String> fetchColor(
-  //     DocumentReference<Map<String, dynamic>> docRef) async {
-  //   var code = await docRef.get();
-  //   return code.data()?["code"] ?? "#FFFFFF";
-  // }
-
   /// Fetch color from Firestore and update UI
   static Future<Color> fetchFirestoreColor(
       DocumentReference<Map<String, dynamic>> docRef) async {

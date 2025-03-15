@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../Config/App_Configs/App_Colors.dart';
+import '../../Config/App_Configs/App_Images.dart';
 import '../../Config/App_Configs/App_Sizes.dart';
 import '../../Config/Config_Widgets/Shadowed_Container.dart';
 import '../../Config/Config_Widgets/Text_Widget.dart';
@@ -12,20 +14,25 @@ import '../AppHelper/App_Master_Data.dart';
 import '../Model/Service_Model.dart';
 import '../Routes/App_Routes.dart';
 
-Widget Service_Tile({required Service service, required String vehicleId}) {
+Widget Service_Tile({required Service service}) {
   return ShadowedContainer(
     onTap: () => Get.toNamed(
       AppRoutes.ADD_SERVICE,
-      arguments: {"service": service.toJson(), "vehicleId": vehicleId},
+      arguments: {"service": service.toJson(), "vehicleId": service.vehicleId},
     ),
     backgroundColor: AppColors.white,
-    padding: AppSizes.defaultPadding,
-    border: Border(
-        right: BorderSide(
-            color: service.isDone == false
-                ? AppColors.primary
-                : Colors.transparent,
-            width: 7.5)),
+    padding: EdgeInsets.only(
+      left: AppSizes.smallWidth,
+      top: AppSizes.smallHeight,
+      bottom: AppSizes.smallHeight,
+      right: 0,
+    ),
+    // border: Border(
+    //   right: BorderSide(
+    //       color:
+    //           service.isDone == false ? AppColors.primary : Colors.transparent,
+    //       width: 7.5),
+    // ),
     shadowBlur: 0,
     child: Row(
       spacing: AppSizes.mediumWidth,
@@ -112,9 +119,52 @@ Widget Service_Tile({required Service service, required String vehicleId}) {
                 text: service.problems.toString(),
                 maxLine: 5,
               ),
+              Row(
+                spacing: AppSizes.mediumWidth,
+                children: [
+                  TText(
+                    text: "Total",
+                    fontWeight: AppSizes.wBold,
+                    fontColor: AppColors.black,
+                  ),
+                  TText(
+                    text: (service.total ?? 0).toString(),
+                    fontWeight: AppSizes.wBold,
+                    fontSize: AppSizes.titleSize + 2,
+                    fontColor: AppColors.primary,
+                  ),
+                ],
+              )
             ],
           ),
         ),
+        service.isDone == false
+            ? RotatedBox(
+                quarterTurns: 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: AppSizes.s14, vertical: AppSizes.s6),
+                  child: Row(
+                    children: [
+                      Lottie.asset(AppImages.live_Animation,
+                          height: 2.5.h, fit: BoxFit.cover),
+                      TText(
+                        text: "In Working",
+                        fontColor: AppColors.pastel,
+                        fontSize: AppSizes.subtitleSize,
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : SizedBox(width: AppSizes.smallWidth)
       ],
     ),
   );

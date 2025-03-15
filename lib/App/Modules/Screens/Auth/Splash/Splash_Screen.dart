@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:nv/App/Routes/App_Routes.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../../Config/App_Configs/App_Images.dart';
 import '../../../../../Config/Config_Widgets/Image_Widget.dart';
 import '../../../../AppHelper/App_Preference.dart';
+import '../../../../Routes/App_Routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

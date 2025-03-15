@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:nv/Config/Config_Widgets/Full_Screen_Image_Screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../../Config/App_Configs/App_Colors.dart';
 import '../../../../../Config/App_Configs/App_Functions.dart';
 import '../../../../../Config/App_Configs/App_Sizes.dart';
 import '../../../../../Config/Config_Widgets/App_List_Tile.dart';
+import '../../../../../Config/Config_Widgets/Full_Screen_Image_Screen.dart';
 import '../../../../../Config/Config_Widgets/Image_Widget.dart';
 import '../../../../../Config/Config_Widgets/No_Data.dart';
 import '../../../../../Config/Config_Widgets/Shadowed_Container.dart';
@@ -166,10 +166,7 @@ class VehicleDetailScreen extends StatelessWidget {
                                       itemBuilder: (context, index) {
                                         Service service =
                                             controller.vehicleServices[index];
-                                        return Service_Tile(
-                                          service: service,
-                                          vehicleId: controller.vehicleId,
-                                        );
+                                        return Service_Tile(service: service);
                                       },
                                     ),
                         ),

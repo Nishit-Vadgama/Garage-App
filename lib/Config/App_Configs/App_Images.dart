@@ -9,6 +9,7 @@ class AppImages {
   static const String No_Data_Animation =
       "assets/Animations/no_data_animation.json";
   static const String Warning_Animation = "assets/Animations/warning.json";
+  static const String live_Animation = "assets/Animations/live_animation.json";
 
   // #### CONFIGURATION ####
   static const String App_Logo = "assets/Images/Config_Images/app_logo.png";

@@ -85,9 +85,10 @@ class RoundButton extends StatelessWidget {
   final String text;
   final VoidCallback onPress;
   final Color? backgroundColor, textColor, borderColor;
-  final double? textSize;
+  final double? textSize, height, width;
   final bool isRightArrow;
   final FontWeight? fontWeight;
+  final EdgeInsets? padding;
   const RoundButton({
     super.key,
     required this.text,
@@ -98,36 +99,44 @@ class RoundButton extends StatelessWidget {
     this.isRightArrow = false,
     this.fontWeight,
     this.borderColor,
+    this.padding,
+    this.height,
+    this.width,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      style: ButtonStyle(
-        side: WidgetStatePropertyAll(
-            BorderSide(color: borderColor ?? AppColors.primary)),
-        backgroundColor:
-            WidgetStatePropertyAll(backgroundColor ?? Colors.transparent),
-      ),
-      onPressed: onPress,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TText(
-            text: text,
-            fontWeight: fontWeight,
-            fontSize: textSize,
-            fontColor: textColor ?? AppColors.text,
-          ),
-          if (isRightArrow) SizedBox(width: AppSizes.smallWidth),
-          if (isRightArrow)
-            Icon(
-              FontAwesomeIcons.chevronRight,
-              size: AppSizes.iconSize,
-              color: AppColors.primary,
-            )
-        ],
+    return SizedBox(
+      height: height,
+      width: width,
+      child: TextButton(
+        style: ButtonStyle(
+          padding: WidgetStatePropertyAll(padding ?? EdgeInsets.zero),
+          side: WidgetStatePropertyAll(
+              BorderSide(color: borderColor ?? AppColors.primary)),
+          backgroundColor:
+              WidgetStatePropertyAll(backgroundColor ?? Colors.transparent),
+        ),
+        onPressed: onPress,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TText(
+              text: text,
+              fontWeight: fontWeight,
+              fontSize: textSize,
+              fontColor: textColor ?? AppColors.text,
+            ),
+            if (isRightArrow) SizedBox(width: AppSizes.smallWidth),
+            if (isRightArrow)
+              Icon(
+                FontAwesomeIcons.chevronRight,
+                size: AppSizes.iconSize,
+                color: AppColors.primary,
+              )
+          ],
+        ),
       ),
     );
   }

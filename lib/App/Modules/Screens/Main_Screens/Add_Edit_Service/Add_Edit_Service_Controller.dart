@@ -10,14 +10,14 @@ import '../../../../Model/Work_Model.dart';
 import '../Vehicle_Detail/Vehicle_Detail_Controller.dart';
 
 class AddEditServiceController extends GetxController {
-  final Service? service;
-  final String? vehicleId;
-  AddEditServiceController({this.vehicleId, this.service});
+  final Service service;
+  AddEditServiceController({required this.service});
 
   final formKey = GlobalKey<FormState>();
-  RxList<Work> works = <Work>[Work()].obs;
+  RxList<Work> works = <Work>[].obs;
   TextEditingController problemController = TextEditingController();
   String serviceId = "";
+  String vehicleId = "";
   RxBool isServiceDone = false.obs;
   Timestamp startDate = Timestamp.now();
   Timestamp? endDate;
@@ -28,19 +28,21 @@ class AddEditServiceController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (service != null) setServiceData();
+    if (service.serviceId != null) setServiceData();
+    vehicleId = service.vehicleId!;
   }
 
   setServiceData() {
-    serviceId = service!.serviceId.toString();
-    problemController.text = service!.problems.toString();
-    isServiceDone.value = service!.isDone!;
-    works.value = service!.work ?? [];
-    startDate = service!.startDate!;
-    endDate = service!.endDate;
-    total.value = service!.total!;
-    servicesTotal.value = service!.servicesTotal!;
-    itemsTotal.value = service!.itemsTotal!;
+    serviceId = service.serviceId.toString();
+    problemController.text = service.problems.toString();
+    isServiceDone.value = service.isDone!;
+    works.value = service.work ?? [];
+    startDate = service.startDate!;
+    endDate = service.endDate;
+    total.value = service.total!;
+    servicesTotal.value = service.servicesTotal!;
+    itemsTotal.value = service.itemsTotal!;
+    vehicleId = service.vehicleId!;
     calculateTotal();
   }
 
@@ -53,17 +55,21 @@ class AddEditServiceController extends GetxController {
         problems: problemController.text.trim(),
         isDone: isServiceDone.value,
         startDate: startDate,
-        endDate: isServiceDone.value ? Timestamp.now() : null,
+        endDate: isServiceDone.value ? (endDate ?? Timestamp.now()) : null,
         work: works,
         total: total.value,
         servicesTotal: servicesTotal.value,
         itemsTotal: itemsTotal.value,
+        vehicleId: vehicleId,
       );
 
-      bool isSuccess = await DatabaseServices.addOrUpdateVehicleService(
-        vehicleId: vehicleId ?? "",
-        service: service,
-      );
+      if (isServiceDone.value && works.isEmpty) {
+        return App_Snackbar(
+            type: false, msg: "Please Add Works For This Service");
+      }
+
+      bool isSuccess =
+          await DatabaseServices.addOrUpdateVehicleService(service: service);
       if (isSuccess) {
         Get.find<VehicleDetailController>().getVehicleServices();
         Get.back();

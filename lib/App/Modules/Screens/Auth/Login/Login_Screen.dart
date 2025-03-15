@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:nv/Config/App_Configs/App_Colors.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import '../../../../../Config/App_Configs/App_Colors.dart';
 import '../../../../../Config/App_Configs/App_Images.dart';
 import '../../../../../Config/App_Configs/App_Sizes.dart';
 import '../../../../../Config/App_Configs/App_Strings.dart';

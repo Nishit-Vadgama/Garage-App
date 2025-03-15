@@ -141,13 +141,11 @@ class DatabaseServices {
     }
   }
 
-  static Future<bool> addOrUpdateVehicleService({
-    required String vehicleId,
-    required Service service,
-  }) async {
+  static Future<bool> addOrUpdateVehicleService(
+      {required Service service}) async {
     try {
       final serviceCollection =
-          CollectionService.VehicleCollection.doc(vehicleId)
+          CollectionService.VehicleCollection.doc(service.vehicleId)
               .collection("Services");
 
       if (service.serviceId == null || service.serviceId!.isEmpty) {
@@ -181,11 +179,12 @@ class DatabaseServices {
             .get();
 
         for (var serviceDoc in serviceSnapshot.docs) {
-          servicesList.add(Service.fromJson(serviceDoc.data()));
+          servicesList
+              .add(Service.fromJson(serviceDoc.data() as Map<String, dynamic>));
         }
       }
-      print(
-          "SERVICES --> ${servicesList.map((e) => print(e.toJson())).toList()}");
+
+      print("SERVICES -->$servicesList ");
       return servicesList;
     } catch (error) {
       print("Error while fetching services: $error");
